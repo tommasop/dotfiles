@@ -1,0 +1,35 @@
+# Git
+alias gl='git pull --prune'
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+alias gp='git push origin HEAD'
+alias gd='git diff'
+alias gc='git commit'
+alias gca='git commit -a'
+alias gco='git checkout'
+alias gb='git branch'
+alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
+alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+
+# Docker
+alias dip="docker inspect -f '{{ .NetworkSettings.IPAddress }}'"
+
+dssh() {
+  PID=$(docker inspect --format {{.State.Pid}} $1)
+  sudo /usr/bin/nsenter --target $PID --mount --uts --ipc --net --pid env -i - $(sudo cat /proc/$PID/environ | xargs -0) bash
+}
+
+drmiall() {
+  docker rmi `docker images -q -f dangling=true`
+}
+
+drmall() {
+  docker rm `docker ps -a -q`
+}
+
+drmin() {
+  docker rmi `docker images | grep '<none>' | awk '{print $3}'`
+}
+
+drme() {
+  docker ps -a | grep /bin/sh | awk '{print $1}' | xargs sudo docker rm
+}
