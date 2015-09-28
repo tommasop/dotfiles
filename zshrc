@@ -34,6 +34,9 @@ colors
 # Other modules we want to source
 . ~/.zsh/zsh_aliases
 
+# aliases
+[[ -f ~/.aliases ]] && source ~/.aliases
+
 ##############################
 # Key bidings
 bindkey ";5C" forward-word
