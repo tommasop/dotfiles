@@ -15,6 +15,7 @@ setopt interactivecomments
 # Add to path
 PATH=~/.cabal/bin:$PATH
 PATH=~/.bin:$PATH
+PATH=~/bin:$PATH
 PATH=/usr/local/bin:$PATH
 PATH="$HOME/Library/Haskell/bin:$PATH"
 PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/usr/texbin

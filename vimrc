@@ -28,6 +28,10 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'gabrielelana/vim-markdown'
 Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+Plug 'vim-scripts/TwitVim'
+Plug 'vim-scripts/DrawIt'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
 
 call plug#end()
 
@@ -51,7 +55,7 @@ let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " Linux/MacOSX
 
 " Color Scheme
-set background=light
+set background=dark
 let g:solarized_termcolors=256
 colorscheme solarized
 
@@ -112,3 +116,6 @@ vmap <silent> <expr> p <sid>Repl()
 " highlighted anymore. From Gary Bernhardt of Destroy All Software
 nnoremap <CR> :nohlsearch<cr>
 imap jk <esc>
+
+" TwitVim
+let twitvim_browser_cmd = 'open'
