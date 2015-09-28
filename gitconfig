@@ -24,3 +24,6 @@
   autosquash = true
 [include]
   path = ~/.gitconfig.local
+[user]
+	name = Tommaso Patrizi
+	email = tommasop@gmail.com
