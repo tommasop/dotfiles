@@ -12,7 +12,7 @@
   co = checkout
   st = status
 [core]
-  excludesfile = ~/.gitignore
+	excludesfile = /Users/tommasop/.gitignore
   autocrlf = input
 [merge]
   ff = only
@@ -26,4 +26,10 @@
   path = ~/.gitconfig.local
 [user]
 	name = Tommaso Patrizi
-	email = tommasop@gmail.com
+	email = tpatrizi@makeplan.it
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

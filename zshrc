@@ -13,16 +13,18 @@ setopt extended_glob
 setopt interactivecomments
 
 # Add to path
-PATH=~/.cabal/bin:$PATH
+PATH=~/.local/bin:$PATH
 PATH=~/.bin:$PATH
 PATH=~/bin:$PATH
 PATH=/usr/local/bin:$PATH
 PATH="$HOME/Library/Haskell/bin:$PATH"
-PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/usr/texbin
+PATH=$PATH:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/texbin
+PATH=$PATH:$(go env GOPATH)/bin
 
 
 # Add to completions
 fpath=(~/.zsh/plugins/completions/src $fpath)
+autoload -Uz compinit && compinit
 
 # Initialize colors
 # Necessary for
@@ -72,7 +74,8 @@ define_vim_wrappers
 
 export GOPATH=$HOME/gocode
 export GOBIN=$HOME/gocode/bin
-
+# for youcompleteme
+export DYLD_FORCE_FLAT_NAMESPACE=1
 export EDITOR="vim"
 bindkey -v 
 
@@ -90,3 +93,20 @@ source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/opt/chruby/share/chruby/auto.sh
 source /usr/local/share/gem_home/gem_home.sh
 unsetopt prompt_cr
+
+###-tns-completion-start-###
+if [ -f /Users/tommasop/.tnsrc ]; then 
+    source /Users/tommasop/.tnsrc 
+fi
+###-tns-completion-end-###
+
+source ~/.xsh
+
+###-exercism-completion-start-###
+if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
+  . ~/.config/exercism/exercism_completion.zsh
+fi
+###-exercism-completion-end-###
+ctags=/usr/local/bin/ctags
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
