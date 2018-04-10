@@ -248,7 +248,7 @@ nmap <silent> <c-l> :wincmd l<CR>
 
 
 " Leader mappings
-nnoremap <Leader>w :w<CR> " save
+nnoremap <Leader>w :w<CR>
 " Copy and paste into clipboard
 vmap <Leader>y "+y 
 vmap <Leader>d "+d
