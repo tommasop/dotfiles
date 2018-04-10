@@ -259,8 +259,9 @@ nmap <Leader><Leader> V
 
 " clear search buffer when hitting return, so what you search for is not
 " highlighted anymore. From Gary Bernhardt of Destroy All Software
-nnoremap <CR> :nohlsearch<cr>
 imap jk <esc>
+:inoremap <CR> <Esc>
+nnoremap <CR> :nohlsearch<cr>
 
 " TwitVim
 let twitvim_browser_cmd = 'open'
