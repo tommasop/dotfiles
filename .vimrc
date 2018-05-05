@@ -43,6 +43,8 @@ Plug 'nanotech/jellybeans.vim'
 Plug 'slim-template/vim-slim'
 Plug 'isRuslan/vim-es6'
 Plug 'ajh17/VimCompletesMe'
+Plug 'elixir-editors/vim-elixir'
+Plug 'mhinz/vim-mix-format'
 
 call plug#end()
 
@@ -257,11 +259,24 @@ nmap <Leader>P "+P
 " Enter in visual mode
 nmap <Leader><Leader> V
 
+imap jk <esc>
+
 " clear search buffer when hitting return, so what you search for is not
 " highlighted anymore. From Gary Bernhardt of Destroy All Software
-imap jk <esc>
-:inoremap <CR> <Esc>
 nnoremap <CR> :nohlsearch<cr>
+" switch to alternate buffer
+nnoremap <Space> <C-^>
 
 " TwitVim
 let twitvim_browser_cmd = 'open'
+
+"Elixir mix format
+let g:mix_format_on_save = 1
+
+nnoremap <silent> <PageUp> <C-U>
+vnoremap <silent> <PageUp> <C-U>
+inoremap <silent> <PageUp> <C-\><C-O><C-U>
+
+nnoremap <silent> <PageDown> <C-D>
+vnoremap <silent> <PageDown> <C-D>
+inoremap <silent> <PageDown> <C-\><C-O><C-D>

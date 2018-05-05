@@ -1,3 +1,15 @@
+##############################################################################
+# History Configuration
+##############################################################################
+HISTSIZE=5000               #How many lines of history to keep in memory
+HISTFILE=~/.zsh_history     #Where to save history to disk
+SAVEHIST=5000               #Number of history entries to save to disk
+#HISTDUP=erase               #Erase duplicates in the history file
+#setopt    appendhistory     #Append history to the history file (no overwriting)
+setopt    sharehistory      #Share history across terminals
+#setopt    incappendhistory  #Immediately append to the history file, not just when a term is killed
+
+# Path
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
@@ -17,7 +29,7 @@ zplug 'denysdovhan/spaceship-prompt', use:spaceship.zsh, from:github, as:theme
 # SPACESHIP Theme
 SPACESHIP_CHAR_SYMBOL=❯
 SPACESHIP_PROMPT_ADD_NEWLINE=false
-SPACESHIP_PROMPT_SEPARATE_LINE=false
+# SPACESHIP_PROMPT_SEPARATE_LINE=false
 SPACESHIP_DIR_COLOR="081"
 
 # Grab binaries from GitHub Releases
@@ -53,3 +65,5 @@ bindkey '^T' fzf-completion
 bindkey '^I' $fzf_default_completion
 
 source $HOME/.aliases
+
+unsetopt prompt_cr

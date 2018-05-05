@@ -3,3 +3,5 @@ alias poston="pg_ctl start -D /home/linuxbrew/.linuxbrew/var/postgres"
 alias postoff="pg_ctl stop -D /home/linuxbrew/.linuxbrew/var/postgres"
 # pass
 alias pim="pass insert -m"
+# open
+alias open='xdg-open'
