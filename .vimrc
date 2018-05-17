@@ -232,7 +232,9 @@ set relativenumber
 " Try to speed up vim horizontal scrolling
 " set synmaxcol=128
 set ttyfast " u got a fast terminal
-set ttyscroll=3
+if !has('nvim')
+  set ttyscroll=3
+endif
 set lazyredraw " to avoid scrolling problems
 set clipboard=unnamed " to copy into global clipboard
 
