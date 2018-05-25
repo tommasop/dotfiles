@@ -28,11 +28,9 @@ Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-fugitive'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'gabrielelana/vim-markdown'
 Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plug 'vim-scripts/TwitVim'
-Plug 'vim-scripts/DrawIt'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -42,7 +40,11 @@ Plug 'w0rp/ale'
 Plug 'nanotech/jellybeans.vim'
 Plug 'slim-template/vim-slim'
 Plug 'isRuslan/vim-es6'
-Plug 'ajh17/VimCompletesMe'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'ajh17/VimCompletesMe'
+endif
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 
@@ -226,17 +228,24 @@ syntax on
 set noshowmode
 set laststatus=2
 
-" Open files with relative line numbers shown
-set relativenumber
+" Open files with hybrid line numbering
+set number relativenumber
 
-" Try to speed up vim horizontal scrolling
-" set synmaxcol=128
-set ttyfast " u got a fast terminal
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+
 if !has('nvim')
+  " Try to speed up vim horizontal scrolling
+  " set synmaxcol=128
+  set ttyfast " u got a fast terminal
   set ttyscroll=3
+  set lazyredraw " to avoid scrolling problems
 endif
-set lazyredraw " to avoid scrolling problems
-set clipboard=unnamed " to copy into global clipboard
+
+" set clipboard=unnamed " to copy into global clipboard
 
 " NERDTree to C-e
 map <C-e> :NERDTreeToggle<CR>
