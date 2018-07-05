@@ -11,9 +11,12 @@ setopt    sharehistory      #Share history across terminals
 
 # Path
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+export PATH="/home/linuxbrew/.linuxbrew/sbin:$PATH"
 export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 export ZPLUG_HOME=/home/linuxbrew/.linuxbrew/opt/zplug
+
+export EDITOR=nvim
 
 # Check if zplug is installed
 if [[ ! -d $ZPLUG_HOME ]]; then
@@ -31,6 +34,8 @@ SPACESHIP_CHAR_SYMBOL=❯
 SPACESHIP_PROMPT_ADD_NEWLINE=false
 # SPACESHIP_PROMPT_SEPARATE_LINE=false
 SPACESHIP_DIR_COLOR="081"
+# in tmux i have vi mode but [I] is not nice to see
+SPACESHIP_VI_MODE_SHOW=false
 
 # Grab binaries from GitHub Releases
 # and rename with the "rename-to:" tag

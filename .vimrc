@@ -40,13 +40,10 @@ Plug 'w0rp/ale'
 Plug 'nanotech/jellybeans.vim'
 Plug 'slim-template/vim-slim'
 Plug 'isRuslan/vim-es6'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'ajh17/VimCompletesMe'
-endif
+Plug 'ajh17/VimCompletesMe'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
+Plug 'janko-m/vim-test'
 
 call plug#end()
 
@@ -245,6 +242,11 @@ if !has('nvim')
   set lazyredraw " to avoid scrolling problems
 endif
 
+if has('nvim')
+  let g:python_host_prog = '/home/linuxbrew/.linuxbrew/bin/python'
+  let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'
+endif
+
 " set clipboard=unnamed " to copy into global clipboard
 
 " NERDTree to C-e
@@ -276,13 +278,23 @@ imap jk <esc>
 " highlighted anymore. From Gary Bernhardt of Destroy All Software
 nnoremap <CR> :nohlsearch<cr>
 " switch to alternate buffer
-nnoremap <Space> <C-^>
+nnoremap <Space><Space> <C-^>
+" yank to system clipboard
+nnoremap <leader>y "+y
 
 " TwitVim
 let twitvim_browser_cmd = 'open'
 
 "Elixir mix format
 let g:mix_format_on_save = 1
+
+" Vim Test
+" these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
+nmap <silent> t<C-n> :TestNearest<CR> " t Ctrl+n
+nmap <silent> t<C-f> :TestFile<CR>    " t Ctrl+f
+nmap <silent> t<C-s> :TestSuite<CR>   " t Ctrl+s
+nmap <silent> t<C-l> :TestLast<CR>    " t Ctrl+l
+nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
 
 nnoremap <silent> <PageUp> <C-U>
 vnoremap <silent> <PageUp> <C-U>
