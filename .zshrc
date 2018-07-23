@@ -69,6 +69,8 @@ export FZF_COMPLETION_TRIGGER=''
 bindkey '^T' fzf-completion
 bindkey '^I' $fzf_default_completion
 
+bindkey -e
+
 source $HOME/.aliases
 
 unsetopt prompt_cr
