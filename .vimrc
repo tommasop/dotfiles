@@ -28,7 +28,8 @@ Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-fugitive'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'gabrielelana/vim-markdown'
+"Plug 'gabrielelana/vim-markdown'
+Plug 'plasticboy/vim-markdown'
 Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plug 'vim-scripts/TwitVim'
 Plug 'AndrewRadev/splitjoin.vim'
@@ -39,6 +40,7 @@ Plug 'mileszs/ack.vim'
 Plug 'w0rp/ale'
 Plug 'nanotech/jellybeans.vim'
 Plug 'slim-template/vim-slim'
+Plug 'slime-lang/vim-slime-syntax'
 Plug 'isRuslan/vim-es6'
 Plug 'ajh17/VimCompletesMe'
 Plug 'elixir-editors/vim-elixir'
