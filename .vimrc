@@ -46,6 +46,7 @@ Plug 'ajh17/VimCompletesMe'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'janko-m/vim-test'
+Plug 'tpope/vim-dispatch'
 
 call plug#end()
 
@@ -297,6 +298,8 @@ nmap <silent> t<C-f> :TestFile<CR>    " t Ctrl+f
 nmap <silent> t<C-s> :TestSuite<CR>   " t Ctrl+s
 nmap <silent> t<C-l> :TestLast<CR>    " t Ctrl+l
 nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
+" make test commands execute using dispatch.vim
+let test#strategy = "dispatch"
 
 nnoremap <silent> <PageUp> <C-U>
 vnoremap <silent> <PageUp> <C-U>
