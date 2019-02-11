@@ -6,6 +6,9 @@ set encoding=utf-8
 set showcmd                     " display incomplete commands
 set nobackup                    " no swap files
 set nowritebackup
+"Autocompletion in command mode
+set wildmenu
+set wildmode=longest,list,full
 "Vim Plug autoload
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -46,7 +49,7 @@ Plug 'ajh17/VimCompletesMe'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'janko-m/vim-test'
-Plug 'tpope/vim-dispatch'
+" Plug 'tpope/vim-dispatch'
 
 call plug#end()
 
@@ -72,7 +75,8 @@ set rtp+=/usr/local/opt/fzf
 set rtp+=~/.fzf
 nmap ; :Buffers<CR>
 nmap <Leader>r :Tags<CR>
-nmap <Leader>t :Files<CR>
+nmap <Leader>t :GFiles<CR>
+nmap <Leader>g :Files<CR>
 nmap <Leader>a :Ag<CR>
 
 " FZF color scheme updater from https://github.com/junegunn/fzf.vim/issues/59
@@ -142,6 +146,7 @@ let g:ale_sign_warning = '▲'
 let g:ale_sign_error = '✗'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
+map <Leader>' :ALEToggle<CR>
 nmap ]l :ALENextWrap<CR>
 nmap [l :ALEPreviousWrap<CR>
 
@@ -299,7 +304,7 @@ nmap <silent> t<C-s> :TestSuite<CR>   " t Ctrl+s
 nmap <silent> t<C-l> :TestLast<CR>    " t Ctrl+l
 nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
 " make test commands execute using dispatch.vim
-let test#strategy = "dispatch"
+" let test#strategy = "dispatch"
 
 nnoremap <silent> <PageUp> <C-U>
 vnoremap <silent> <PageUp> <C-U>
