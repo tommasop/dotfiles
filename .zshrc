@@ -18,6 +18,8 @@ export ZPLUG_HOME=/home/linuxbrew/.linuxbrew/opt/zplug
 
 export EDITOR=nvim
 export ERL_AFLAGS="-kernel shell_history enabled"
+export PASSWORD_STORE_ENABLE_EXTENSIONS=true
+export PASSWORD_STORE_EXTENSIONS_DIR=/home/linuxbrew/.linuxbrew/lib/password-store/extensions
 
 # Check if zplug is installed
 if [[ ! -d $ZPLUG_HOME ]]; then

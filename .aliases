@@ -16,3 +16,7 @@ mp3p () {
 # copy paste OSX style
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
+
+setTitle() {
+  echo -e "\033]0;$@\007" 
+}
