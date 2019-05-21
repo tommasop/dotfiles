@@ -17,6 +17,10 @@ mp3p () {
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 
+# Set title in terminal
 setTitle() {
   echo -e "\033]0;$@\007" 
 }
+
+# Problem with headset audio / mic
+alias raudio="alsactl restore"

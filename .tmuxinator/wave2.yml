@@ -1,0 +1,12 @@
+name: Populi Wave2
+root: ~/code/work/populi/wave2
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - nvim
+        - #empty, will just run plain bash
+        - #empty
+  - server: rails s
+  - logs: tail -f logs/development.log
+  - console: rails c

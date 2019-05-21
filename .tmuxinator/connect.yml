@@ -1,0 +1,12 @@
+name: Populi Connect
+root: ~/code/work/populi/connect
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - nvim
+        - #empty, will just run plain bash
+        - #empty
+  - server: rails s
+  - logs: tail -f logs/development.log
+  - console: rails c
