@@ -1,4 +1,4 @@
-name: Populi Wave2
+name: populi-wave2
 root: ~/code/work/populi/wave2
 windows:
   - editor:
@@ -8,5 +8,5 @@ windows:
         - #empty, will just run plain bash
         - #empty
   - server: rails s
-  - logs: tail -f logs/development.log
+  - logs: tail -f log/development.log
   - console: rails c

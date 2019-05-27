@@ -1,4 +1,4 @@
-name: Populi Connect
+name: populi-connect
 root: ~/code/work/populi/connect
 windows:
   - editor:
@@ -7,6 +7,5 @@ windows:
         - nvim
         - #empty, will just run plain bash
         - #empty
-  - server: rails s
-  - logs: tail -f logs/development.log
-  - console: rails c
+  - server: mix phx.server
+  - console: iex -S mix

@@ -1,4 +1,4 @@
-name: Populi Mundi
+name: populi-mundi
 root: ~/code/work/populi/mundi_wave
 windows:
   - editor:
@@ -8,5 +8,5 @@ windows:
         - #empty, will just run plain bash
         - #empty
   - server: rails s
-  - logs: tail -f logs/development.log
+  - logs: tail -f log/development.log
   - console: rails c
