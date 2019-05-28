@@ -4,7 +4,7 @@ windows:
   - editor:
       layout: main-vertical
       panes:
-        - nvim
+        - nvim mix.exs
         - #empty, will just run plain bash
         - #empty
   - server: mix phx.server
