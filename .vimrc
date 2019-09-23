@@ -31,7 +31,6 @@ Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-fugitive'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-"Plug 'gabrielelana/vim-markdown'
 Plug 'plasticboy/vim-markdown'
 Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plug 'vim-scripts/TwitVim'
@@ -313,3 +312,7 @@ inoremap <silent> <PageUp> <C-\><C-O><C-U>
 nnoremap <silent> <PageDown> <C-D>
 vnoremap <silent> <PageDown> <C-D>
 inoremap <silent> <PageDown> <C-\><C-O><C-D>
+
+syntax on
+filetype on
+au BufNewFile,BufRead *.jb set filetype=ruby
