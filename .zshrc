@@ -10,11 +10,13 @@ setopt    sharehistory      #Share history across terminals
 #setopt    incappendhistory  #Immediately append to the history file, not just when a term is killed
 
 # Path
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 export PATH="/home/linuxbrew/.linuxbrew/sbin:$PATH"
 export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 export ZPLUG_HOME=/home/linuxbrew/.linuxbrew/opt/zplug
+export RSTUDIO_WHICH_R=`which R`
 
 export EDITOR=nvim
 export ERL_AFLAGS="-kernel shell_history enabled"
@@ -78,3 +80,4 @@ bindkey -e
 source $HOME/.aliases
 
 unsetopt prompt_cr
+export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/bin:$PATH"

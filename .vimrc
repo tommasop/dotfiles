@@ -27,7 +27,7 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'itchyny/lightline.vim'
 Plug 'altercation/vim-colors-solarized'
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-fugitive'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
@@ -48,6 +48,7 @@ Plug 'ajh17/VimCompletesMe'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'janko-m/vim-test'
+Plug 'lervag/vimtex'
 " Plug 'tpope/vim-dispatch'
 
 call plug#end()
