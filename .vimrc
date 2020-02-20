@@ -212,7 +212,7 @@ let g:rehash256 = 1
 colorscheme jellybeans
 if !has('gui_running')
   let g:solarized_termcolors=256
-  if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
+  if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal" || $TERM == "xterm-kitty"
     set t_Co=256
   elseif has("terminfo")
     colorscheme default
