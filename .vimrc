@@ -307,6 +307,11 @@ nmap <silent> t<C-g> :TestVisit<CR>
 " make test commands execute using dispatch.vim
 " let test#strategy = "dispatch"
 
+" vim-tmux-runner configuration
+let g:VtrUseVtrMaps = 1
+let g:VtrStripLeadingWhitespace = 1
+let g:VtrClearEmptyLines = 1
+
 nnoremap <silent> <PageUp> <C-U>
 vnoremap <silent> <PageUp> <C-U>
 inoremap <silent> <PageUp> <C-\><C-O><C-U>
