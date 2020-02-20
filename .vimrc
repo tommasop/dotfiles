@@ -49,6 +49,7 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'janko-m/vim-test'
 Plug 'lervag/vimtex'
+Plug 'christoomey/vim-tmux-runner'
 " Plug 'tpope/vim-dispatch'
 
 call plug#end()
