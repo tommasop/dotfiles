@@ -6,9 +6,6 @@ set encoding=utf-8
 set showcmd                     " display incomplete commands
 set nobackup                    " no swap files
 set nowritebackup
-"Autocompletion in command mode
-set wildmenu
-set wildmode=longest,list,full
 "Vim Plug autoload
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -27,10 +24,11 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'itchyny/lightline.vim'
 Plug 'altercation/vim-colors-solarized'
-Plug 'vim-ruby/vim-ruby'
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-fugitive'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+"Plug 'gabrielelana/vim-markdown'
 Plug 'plasticboy/vim-markdown'
 Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plug 'vim-scripts/TwitVim'
@@ -48,9 +46,7 @@ Plug 'ajh17/VimCompletesMe'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'janko-m/vim-test'
-Plug 'lervag/vimtex'
-Plug 'christoomey/vim-tmux-runner'
-" Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-dispatch'
 
 call plug#end()
 
@@ -76,8 +72,7 @@ set rtp+=/usr/local/opt/fzf
 set rtp+=~/.fzf
 nmap ; :Buffers<CR>
 nmap <Leader>r :Tags<CR>
-nmap <Leader>t :GFiles<CR>
-nmap <Leader>g :Files<CR>
+nmap <Leader>t :Files<CR>
 nmap <Leader>a :Ag<CR>
 
 " FZF color scheme updater from https://github.com/junegunn/fzf.vim/issues/59
@@ -147,7 +142,6 @@ let g:ale_sign_warning = '▲'
 let g:ale_sign_error = '✗'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
-map <Leader>' :ALEToggle<CR>
 nmap ]l :ALENextWrap<CR>
 nmap [l :ALEPreviousWrap<CR>
 
@@ -212,7 +206,7 @@ let g:rehash256 = 1
 colorscheme jellybeans
 if !has('gui_running')
   let g:solarized_termcolors=256
-  if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal" || $TERM == "xterm-kitty"
+  if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
     set t_Co=256
   elseif has("terminfo")
     colorscheme default
@@ -299,18 +293,13 @@ let g:mix_format_on_save = 1
 
 " Vim Test
 " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
-nmap <silent> t<C-n> :TestNearest<CR>
-nmap <silent> t<C-f> :TestFile<CR>
-nmap <silent> t<C-s> :TestSuite<CR>
-nmap <silent> t<C-l> :TestLast<CR>
-nmap <silent> t<C-g> :TestVisit<CR>
+nmap <silent> t<C-n> :TestNearest<CR> " t Ctrl+n
+nmap <silent> t<C-f> :TestFile<CR>    " t Ctrl+f
+nmap <silent> t<C-s> :TestSuite<CR>   " t Ctrl+s
+nmap <silent> t<C-l> :TestLast<CR>    " t Ctrl+l
+nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
 " make test commands execute using dispatch.vim
-" let test#strategy = "dispatch"
-
-" vim-tmux-runner configuration
-let g:VtrUseVtrMaps = 1
-let g:VtrStripLeadingWhitespace = 1
-let g:VtrClearEmptyLines = 1
+let test#strategy = "dispatch"
 
 nnoremap <silent> <PageUp> <C-U>
 vnoremap <silent> <PageUp> <C-U>
@@ -319,7 +308,3 @@ inoremap <silent> <PageUp> <C-\><C-O><C-U>
 nnoremap <silent> <PageDown> <C-D>
 vnoremap <silent> <PageDown> <C-D>
 inoremap <silent> <PageDown> <C-\><C-O><C-D>
-
-syntax on
-filetype on
-au BufNewFile,BufRead *.jb set filetype=ruby

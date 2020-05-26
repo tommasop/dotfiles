@@ -13,25 +13,3 @@ mp3 () {
 mp3p () {
 	youtube-dl --no-check-certificate --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
 }
-# copy paste OSX style
-alias pbcopy='xclip -selection clipboard'
-alias pbpaste='xclip -selection clipboard -o'
-
-# Set title in terminal
-setTitle() {
-  echo -e "\033]0;$@\007" 
-}
-
-# Problem with headset audio / mic
-alias raudio="alsactl restore"
-
-# p7m
-p7m_dcrypt () {
-	outdir="$1.out"
-	filename="${1##*/}" #extract filename, without path
-	outfile=$outdir/${filename/.p7m/}
-	mkdir $outdir
-	openssl pkcs7 -inform DER -in "$1" -print_certs -out "$outdir/signer.pem"
-	openssl smime -verify -in "$1" -inform der -noverify -signer  "$outdir/signer.pem" -out "$outfile" 2>/dev/null
-	nvim "$outfile"
-}

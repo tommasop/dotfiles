@@ -10,18 +10,14 @@ setopt    sharehistory      #Share history across terminals
 #setopt    incappendhistory  #Immediately append to the history file, not just when a term is killed
 
 # Path
-export PATH="$HOME/.local/bin:$PATH"
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 export PATH="/home/linuxbrew/.linuxbrew/sbin:$PATH"
 export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 export ZPLUG_HOME=/home/linuxbrew/.linuxbrew/opt/zplug
-export RSTUDIO_WHICH_R=`which R`
 
 export EDITOR=nvim
 export ERL_AFLAGS="-kernel shell_history enabled"
-export PASSWORD_STORE_ENABLE_EXTENSIONS=true
-export PASSWORD_STORE_EXTENSIONS_DIR=/home/linuxbrew/.linuxbrew/lib/password-store/extensions
 
 # Check if zplug is installed
 if [[ ! -d $ZPLUG_HOME ]]; then
@@ -68,7 +64,6 @@ fi
 zplug load # --verbose
 
 source $HOME/.asdf/asdf.sh
-source $HOME/.asdf/completions/asdf.bash
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_COMPLETION_TRIGGER=''
@@ -80,4 +75,3 @@ bindkey -e
 source $HOME/.aliases
 
 unsetopt prompt_cr
-export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/bin:$PATH"
