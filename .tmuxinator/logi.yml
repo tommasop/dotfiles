@@ -1,0 +1,14 @@
+# ~/.tmuxinator/logi.yml
+# you can make as many tabs as you wish...
+
+name: logishift
+root: ~/code/work/binary_system/softrail-turni
+windows:
+  - editor:
+      layout: f98d,230x59,0,0[230x40,0,0,0,230x18,0,41,4]
+      panes:
+        - nvim Gemfile
+        - #empty
+  - server: bundle exec rails s
+  - logs: tail -f log/development.log
+  - console: bundle exec rails c
