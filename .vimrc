@@ -9,14 +9,13 @@ set nowritebackup
 "Vim Plug autoload
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
 "Vim Plug configuration
 call plug#begin('~/.vim/plugged')
-" My Plugins here:
-"
-" original repos on github
+
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
@@ -28,7 +27,6 @@ Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-fugitive'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-"Plug 'gabrielelana/vim-markdown'
 Plug 'plasticboy/vim-markdown'
 Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plug 'vim-scripts/TwitVim'
@@ -38,19 +36,20 @@ Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'mileszs/ack.vim'
 Plug 'w0rp/ale'
+Plug 'sbdchd/neoformat'
 Plug 'nanotech/jellybeans.vim'
 Plug 'slim-template/vim-slim'
 Plug 'slime-lang/vim-slime-syntax'
 Plug 'isRuslan/vim-es6'
-Plug 'ajh17/VimCompletesMe'
+" Plug 'ajh17/VimCompletesMe'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'janko-m/vim-test'
 Plug 'tpope/vim-dispatch'
-
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
-set omnifunc=syntaxcomplete#Complete
+" set omnifunc=syntaxcomplete#Complete
 
 "" Whitespace
 set nowrap                      " don't wrap lines
@@ -78,18 +77,18 @@ nmap <Leader>a :Ag<CR>
 " FZF color scheme updater from https://github.com/junegunn/fzf.vim/issues/59
 function! s:update_fzf_colors()
   let rules =
-  \ { 'fg':      [['Normal',       'fg']],
-    \ 'bg':      [['Normal',       'bg']],
-    \ 'hl':      [['String',       'fg']],
-    \ 'fg+':     [['CursorColumn', 'fg'], ['Normal', 'fg']],
-    \ 'bg+':     [['CursorColumn', 'bg']],
-    \ 'hl+':     [['String',       'fg']],
-    \ 'info':    [['PreProc',      'fg']],
-    \ 'prompt':  [['Conditional',  'fg']],
-    \ 'pointer': [['Exception',    'fg']],
-    \ 'marker':  [['Keyword',      'fg']],
-    \ 'spinner': [['Label',        'fg']],
-    \ 'header':  [['Comment',      'fg']] }
+        \ { 'fg':      [['Normal',       'fg']],
+        \ 'bg':      [['Normal',       'bg']],
+        \ 'hl':      [['String',       'fg']],
+        \ 'fg+':     [['CursorColumn', 'fg'], ['Normal', 'fg']],
+        \ 'bg+':     [['CursorColumn', 'bg']],
+        \ 'hl+':     [['String',       'fg']],
+        \ 'info':    [['PreProc',      'fg']],
+        \ 'prompt':  [['Conditional',  'fg']],
+        \ 'pointer': [['Exception',    'fg']],
+        \ 'marker':  [['Keyword',      'fg']],
+        \ 'spinner': [['Label',        'fg']],
+        \ 'header':  [['Comment',      'fg']] }
   let cols = []
   for [name, pairs] in items(rules)
     for pair in pairs
@@ -131,6 +130,11 @@ endfunction
 
 inoremap <silent> <C-X><C-W> <C-o>:call <SID>fzf_words(expand('<cWORD>'))<CR>
 
+" One Ruby to rule them all
+" chose one ruby version to install lint/fix
+" autocomplete related gems
+" let g:ruby_host_prog = '/home/tommasop/.asdf/installs/ruby/2.6.6/bin/neovim-ruby-host'
+
 " GitGutter styling to use · instead of +/-
 let g:gitgutter_sign_added = '∙'
 let g:gitgutter_sign_modified = '∙'
@@ -140,32 +144,55 @@ let g:gitgutter_sign_modified_removed = '∙'
 " ALE
 let g:ale_sign_warning = '▲'
 let g:ale_sign_error = '✗'
+"let g:ale_linters = {
+"      \ 'ruby': ['standardrb', 'rubocop'],
+"      \ 'python': ['flake8', 'pylint'],
+"      \ 'javascript': ['eslint'],
+"      \ }
+"let g:ale_fixers = {'ruby': ['standardrb']}
+let g:ruby_indent_assignment_style = 'variable'
+let g:ale_fix_on_save = 1
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
 nmap ]l :ALENextWrap<CR>
 nmap [l :ALEPreviousWrap<CR>
 
+" NEOFORMAT
+" Enable alignment
+" let g:neoformat_basic_format_align = 1
+" Enable tab to spaces conversion
+" let g:neoformat_basic_format_retab = 1
+" Enable trimmming of trailing whitespace
+" let g:neoformat_basic_format_trim = 1
+" let g:neoformat_enabled_ruby = ['rubocop']
+" augroup fmt
+"  autocmd!
+"  autocmd BufWritePre * undojoin | Neoformat
+" augroup END
+" To run manually
+" nnoremap <leader>fm :Neoformat<CR>
+
 " Lightline
 let g:lightline = {
-\ 'colorscheme': 'wombat',
-\ 'active': {
-\   'left': [['mode', 'paste'], ['filename', 'modified']],
-\   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
-\ },
-\ 'component_expand': {
-\   'linter_warnings': 'LightlineLinterWarnings',
-\   'linter_errors': 'LightlineLinterErrors',
-\   'linter_ok': 'LightlineLinterOK'
-\ },
-\ 'component_type': {
-\   'readonly': 'error',
-\   'linter_warnings': 'warning',
-\   'linter_errors': 'error'
-\ },
-\ 'component_function': {
-\   'filename': 'LightLineFilename'
-\ },
-\ }
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [['mode', 'paste'], ['filename', 'modified']],
+      \   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
+      \ },
+      \ 'component_expand': {
+      \   'linter_warnings': 'LightlineLinterWarnings',
+      \   'linter_errors': 'LightlineLinterErrors',
+      \   'linter_ok': 'LightlineLinterOK'
+      \ },
+      \ 'component_type': {
+      \   'readonly': 'error',
+      \   'linter_warnings': 'warning',
+      \   'linter_errors': 'error'
+      \ },
+      \ 'component_function': {
+      \   'filename': 'LightLineFilename'
+      \ },
+      \ }
 function! LightLineFilename()
   return expand('%')
 endfunction
@@ -182,7 +209,7 @@ function! LightlineLinterErrors() abort
   return l:counts.total == 0 ? '' : printf('%d ✗', all_errors)
 endfunction
 function! LightlineLinterOK() abort
-let l:counts = ale#statusline#Count(bufnr(''))
+  let l:counts = ale#statusline#Count(bufnr(''))
   let l:all_errors = l:counts.error + l:counts.style_error
   let l:all_non_errors = l:counts.total - l:all_errors
   return l:counts.total == 0 ? '✓ ' : ''
@@ -202,7 +229,7 @@ endfunction
 
 " Make sure colored syntax mode is on, and make it Just Work with 256-color terminals.
 set background=dark
-let g:rehash256 = 1 
+let g:rehash256 = 1
 colorscheme jellybeans
 if !has('gui_running')
   let g:solarized_termcolors=256
@@ -254,21 +281,21 @@ endif
 
 " NERDTree to C-e
 map <C-e> :NERDTreeToggle<CR>
-" ##############################################################################                                                                         
-" Easier split navigation                                                                                                                               
-" ##############################################################################                                                                         
+" ##############################################################################
+" Easier split navigation
+" ##############################################################################
 "
 " Use ctrl-[hjkl] to select the active split!
-nmap <silent> <c-k> :wincmd k<CR>                                                                                                                       
-nmap <silent> <c-j> :wincmd j<CR>                                                                                                                       
-nmap <silent> <c-h> :wincmd h<CR>                                                                                                                       
+nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-h> :wincmd h<CR>
 nmap <silent> <c-l> :wincmd l<CR>
 
 
 " Leader mappings
 nnoremap <Leader>w :w<CR>
 " Copy and paste into clipboard
-vmap <Leader>y "+y 
+vmap <Leader>y "+y
 vmap <Leader>d "+d
 nmap <Leader>p "+p
 nmap <Leader>P "+P

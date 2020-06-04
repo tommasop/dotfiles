@@ -27,17 +27,6 @@ fi
 
 source $ZPLUG_HOME/init.zsh
 
-# Load theme file
-zplug 'denysdovhan/spaceship-prompt', use:spaceship.zsh, from:github, as:theme
-
-# SPACESHIP Theme
-SPACESHIP_CHAR_SYMBOL=❯
-SPACESHIP_PROMPT_ADD_NEWLINE=false
-# SPACESHIP_PROMPT_SEPARATE_LINE=false
-SPACESHIP_DIR_COLOR="081"
-# in tmux i have vi mode but [I] is not nice to see
-SPACESHIP_VI_MODE_SHOW=false
-
 # Grab binaries from GitHub Releases
 # and rename with the "rename-to:" tag
 zplug "junegunn/fzf-bin", \
@@ -49,6 +38,7 @@ zplug "junegunn/fzf-bin", \
 # Supports oh-my-zsh plugins and the like
 zplug "plugins/git", from:oh-my-zsh, ignore:oh-my-zsh.sh
 zplug "plugins/rails", from:oh-my-zsh, ignore:oh-my-zsh.sh
+zplug "plugins/asdf", from:oh-my-zsh, ignore:oh-my-zsh.sh
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 
@@ -75,3 +65,4 @@ bindkey -e
 source $HOME/.aliases
 
 unsetopt prompt_cr
+eval "$(starship init zsh)"
