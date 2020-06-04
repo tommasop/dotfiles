@@ -13,6 +13,12 @@ if ! command -v asdf &>/dev/null; then
     bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
     asdf plugin add elixir
     asdf plugin add postgres
+    
+    # Install latest ruby with some needed gems
+    asdf install ruby `asdf latest ruby`
+    ruby -v
+    gem install pronto
+    gem install pronto-rubocop
 else
   echo "You already have asdf installed!"
 fi
