@@ -20,6 +20,7 @@ if ! command -v asdf &>/dev/null; then
     asdf update
     asdf plugin add ruby
     asdf plugin add nodejs
+    bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
     asdf plugin add elixir
     asdf plugin add postgres
 else
