@@ -1,15 +1,6 @@
 #!/bin/bash
 
-pretty_print() {
-  printf "\n%b\n" "$1"
-}
-# 
-pretty_print "Here we go..."
-
-# So it begins
-
-# Asdf installation
-
+echo "Installing ASDF"
 if ! command -v asdf &>/dev/null; then
   pretty_print "Installing asdf ..."
     git clone https://github.com/asdf-vm/asdf.git ~/.asdf
