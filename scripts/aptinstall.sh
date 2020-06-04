@@ -15,7 +15,6 @@ function install {
 }
 
 # Basics
-install awscli
 install chromium-browser
 install curl
 install dialog
@@ -31,7 +30,3 @@ install tree
 install xclip
 install zsh
 install pass
-
-# Image processing
-install jpegoptim
-install optipng
