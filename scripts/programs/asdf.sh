@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 pretty_print() {
   printf "\n%b\n" "$1"
