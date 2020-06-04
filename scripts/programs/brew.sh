@@ -1,14 +1,9 @@
 #!/bin/bash
 
-# This is part of a larger script for setting a mac for python development.
-set -e
-
-# Shared functions
-
 pretty_print() {
   printf "\n%b\n" "$1"
 }
-# 
+
 pretty_print "Here we go..."
 
 # Homebrew installation
