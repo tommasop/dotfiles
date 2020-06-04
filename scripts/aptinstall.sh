@@ -30,6 +30,7 @@ install tmux
 install tree
 install xclip
 install zsh
+install pass
 
 # Image processing
 install jpegoptim
