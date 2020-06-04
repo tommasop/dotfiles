@@ -2,7 +2,6 @@
 
 echo "Installing ASDF"
 if ! command -v asdf &>/dev/null; then
-  pretty_print "Installing asdf ..."
     git clone https://github.com/asdf-vm/asdf.git ~/.asdf
     cd ~/.asdf
     git checkout "$(git describe --abbrev=0 --tags)"
@@ -15,5 +14,5 @@ if ! command -v asdf &>/dev/null; then
     asdf plugin add elixir
     asdf plugin add postgres
 else
-  pretty_print "You already have asdf installed!"
+  echo "You already have asdf installed!"
 fi
