@@ -7,3 +7,5 @@ echo "Installing zoom-client"
 snap install zoom-client
 echo "Installing skype"
 snap install skype --classic
+echo "Installing remmina"
+snap install remmina
