@@ -15,10 +15,10 @@ if ! command -v asdf &>/dev/null; then
     asdf plugin add postgres
     
     # Install latest ruby with some needed gems
-    asdf install ruby `asdf latest ruby`
+    asdf install ruby latest
     ruby -v
     gem install pronto
-    gem install pronto-rubocop
+    gem install pronto-standardrb
 else
   echo "You already have asdf installed!"
 fi
