@@ -27,10 +27,10 @@ PACKAGES=(
     libjpeg
     python
     python3
-    the_silver_searcher
     tmux
     nvim
     youtube-dl
+    ag
 )
 
 echo "Installing packages..."
