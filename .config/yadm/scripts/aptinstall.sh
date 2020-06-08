@@ -17,7 +17,6 @@ function install {
 # Basics
 install curl
 install git
-install jq
 install nmap
 install tree
 install xclip
