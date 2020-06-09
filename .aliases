@@ -13,3 +13,18 @@ mp3 () {
 mp3p () {
 	youtube-dl --no-check-certificate --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
 }
+
+# PostGIS install
+function getpostigs () {
+    wget -q -P tmp/ https://github.com/postgis/postgis/archive/"$@".tar.gz
+    tar xvzf tmp/"$@".tar.gz -C tmp/
+    cd tmp/postgis-"$@"
+    if [[ ! -a ./configure ]]; then
+      ./autogen.sh
+    fi
+    eval ./configure `pg_config --configure`
+    make
+    make install
+    cd ../..
+    rm -rf tmp/
+}
