@@ -15,17 +15,9 @@ function install {
 }
 
 # Basics
-install chromium-browser
 install curl
-install dialog
-install exfat-utils
-install file
 install git
-install htop
-install jq
 install nmap
-install openvpn
-install tmux
 install tree
 install xclip
 install zsh

@@ -27,9 +27,10 @@ PACKAGES=(
     libjpeg
     python
     python3
-    the_silver_searcher
     tmux
     nvim
+    youtube-dl
+    ag
 )
 
 echo "Installing packages..."
@@ -37,5 +38,3 @@ brew install ${PACKAGES[@]}
 
 echo "Cleaning up..."
 brew cleanup
-
-echo 'export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"' >> ~/.zshrc
