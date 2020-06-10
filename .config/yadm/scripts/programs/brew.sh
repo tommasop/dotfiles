@@ -3,7 +3,7 @@ echo "Installing Homebrew"
 
 if ! command -v brew &>/dev/null; then
   echo "Installing Homebrew package manager, follow the instructions..." 
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
   if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
     echo "Put Homebrew location earlier in PATH ..."
@@ -31,6 +31,9 @@ PACKAGES=(
     nvim
     youtube-dl
     ag
+    cmake
+    redis
+    pgcli
 )
 
 echo "Installing packages..."

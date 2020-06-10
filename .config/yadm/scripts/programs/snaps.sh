@@ -9,3 +9,5 @@ echo "Installing skype"
 snap install skype --classic
 echo "Installing remmina"
 snap install remmina
+echo "Installing htop"
+snap install htop
