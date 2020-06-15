@@ -18,7 +18,7 @@ export ZPLUG_HOME=/home/linuxbrew/.linuxbrew/opt/zplug
 export PATH="/usr/local/bin:$PATH"
 export PATH="$PATH:/snap/bin"
 
-export TERM=xterm
+# export TERM=xterm
 export EDITOR=nvim
 export ERL_AFLAGS="-kernel shell_history enabled"
 
@@ -43,7 +43,7 @@ zplug "plugins/git", from:oh-my-zsh, ignore:oh-my-zsh.sh
 zplug "plugins/rails", from:oh-my-zsh, ignore:oh-my-zsh.sh
 zplug "plugins/asdf", from:oh-my-zsh, ignore:oh-my-zsh.sh
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-
+zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -68,4 +68,4 @@ bindkey -e
 source $HOME/.aliases
 
 unsetopt prompt_cr
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"

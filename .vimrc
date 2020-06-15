@@ -22,13 +22,12 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'itchyny/lightline.vim'
-Plug 'altercation/vim-colors-solarized'
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-fugitive'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'plasticboy/vim-markdown'
-Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+Plug 'altercation/vim-colors-solarized'
 Plug 'vim-scripts/TwitVim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -37,7 +36,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'mileszs/ack.vim'
 Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
-Plug 'nanotech/jellybeans.vim'
 Plug 'slim-template/vim-slim'
 Plug 'slime-lang/vim-slime-syntax'
 Plug 'isRuslan/vim-es6'
@@ -130,11 +128,6 @@ endfunction
 
 inoremap <silent> <C-X><C-W> <C-o>:call <SID>fzf_words(expand('<cWORD>'))<CR>
 
-" One Ruby to rule them all
-" chose one ruby version to install lint/fix
-" autocomplete related gems
-" let g:ruby_host_prog = '/home/tommasop/.asdf/installs/ruby/2.6.6/bin/neovim-ruby-host'
-
 " GitGutter styling to use · instead of +/-
 let g:gitgutter_sign_added = '∙'
 let g:gitgutter_sign_modified = '∙'
@@ -174,25 +167,25 @@ nmap [l :ALEPreviousWrap<CR>
 
 " Lightline
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [['mode', 'paste'], ['filename', 'modified']],
-      \   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
-      \ },
-      \ 'component_expand': {
-      \   'linter_warnings': 'LightlineLinterWarnings',
-      \   'linter_errors': 'LightlineLinterErrors',
-      \   'linter_ok': 'LightlineLinterOK'
-      \ },
-      \ 'component_type': {
-      \   'readonly': 'error',
-      \   'linter_warnings': 'warning',
-      \   'linter_errors': 'error'
-      \ },
-      \ 'component_function': {
-      \   'filename': 'LightLineFilename'
-      \ },
-      \ }
+  \ 'colorscheme': 'solarized',
+  \ 'active': {
+  \   'left': [['mode', 'paste'], ['filename', 'modified']],
+  \   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
+  \ },
+  \ 'component_expand': {
+  \   'linter_warnings': 'LightlineLinterWarnings',
+  \   'linter_errors': 'LightlineLinterErrors',
+  \   'linter_ok': 'LightlineLinterOK'
+  \ },
+  \ 'component_type': {
+  \   'readonly': 'error',
+  \   'linter_warnings': 'warning',
+  \   'linter_errors': 'error'
+  \ },
+  \ 'component_function': {
+  \   'filename': 'LightLineFilename'
+  \ },
+  \ }
 function! LightLineFilename()
   return expand('%')
 endfunction
@@ -226,32 +219,12 @@ endfunction
 " ----------------------------------------------------------------------------
 " COLORS
 " ----------------------------------------------------------------------------
-
 " Make sure colored syntax mode is on, and make it Just Work with 256-color terminals.
+" let g:rehash256 = 1
+syntax enable
 set background=dark
-let g:rehash256 = 1
-colorscheme jellybeans
-if !has('gui_running')
-  let g:solarized_termcolors=256
-  if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
-    set t_Co=256
-  elseif has("terminfo")
-    colorscheme default
-    set t_Co=8
-    set t_Sf=[3%p1%dm
-    set t_Sb=[4%p1%dm
-  else
-    colorscheme default
-    set t_Co=8
-    set t_Sf=[3%dm
-    set t_Sb=[4%dm
-  endif
-  " Disable Background Color Erase when within tmux - https://stackoverflow.com/q/6427650/102704
-  if $TMUX != ""
-    set t_ut=
-  endif
-endif
-syntax on
+set t_Co=256
+colorscheme solarized
 set noshowmode
 set laststatus=2
 
