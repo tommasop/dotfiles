@@ -44,6 +44,7 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'janko-m/vim-test'
 Plug 'tpope/vim-dispatch'
+Plug 'lambdalisue/suda.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
@@ -250,7 +251,7 @@ if has('nvim')
   let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'
 endif
 
-" set clipboard=unnamed " to copy into global clipboard
+set clipboard+=unnamedplus
 
 " NERDTree to C-e
 map <C-e> :NERDTreeToggle<CR>
