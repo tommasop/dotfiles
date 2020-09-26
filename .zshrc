@@ -17,6 +17,7 @@ export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 export ZPLUG_HOME=/home/linuxbrew/.linuxbrew/opt/zplug
 export PATH="/usr/local/bin:$PATH"
 export PATH="$PATH:/snap/bin"
+export PATH="$PATH:/home/linuxbrew/.linuxbrew/Cellar/texlive/20190406/"
 
 # export TERM=xterm
 export EDITOR=nvim

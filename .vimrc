@@ -34,7 +34,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'mileszs/ack.vim'
-Plug 'w0rp/ale'
+Plug 'desmap/ale-sensible' | Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
 Plug 'slim-template/vim-slim'
 Plug 'slime-lang/vim-slime-syntax'
@@ -46,6 +46,7 @@ Plug 'janko-m/vim-test'
 Plug 'tpope/vim-dispatch'
 Plug 'lambdalisue/suda.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'samoshkin/vim-mergetool'
 call plug#end()
 
 " set omnifunc=syntaxcomplete#Complete
@@ -129,25 +130,27 @@ endfunction
 
 inoremap <silent> <C-X><C-W> <C-o>:call <SID>fzf_words(expand('<cWORD>'))<CR>
 
-" GitGutter styling to use · instead of +/-
-let g:gitgutter_sign_added = '∙'
-let g:gitgutter_sign_modified = '∙'
-let g:gitgutter_sign_removed = '∙'
-let g:gitgutter_sign_modified_removed = '∙'
-
 " ALE
-let g:ale_sign_warning = '▲'
-let g:ale_sign_error = '✗'
-"let g:ale_linters = {
-"      \ 'ruby': ['standardrb', 'rubocop'],
-"      \ 'python': ['flake8', 'pylint'],
-"      \ 'javascript': ['eslint'],
-"      \ }
-"let g:ale_fixers = {'ruby': ['standardrb']}
-let g:ruby_indent_assignment_style = 'variable'
-let g:ale_fix_on_save = 1
-highlight link ALEWarningSign String
-highlight link ALEErrorSign Title
+function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_warnings = l:counts.total - l:all_errors
+
+    let l:errors_recap = l:all_errors == 0 ? '' : printf('%d⨉ ', all_errors)
+    let l:warnings_recap = l:all_warnings == 0 ? '' : printf('%d⚠ ', all_warnings)
+    return (errors_recap . warnings_recap)
+endfunction
+
+set statusline+=%=
+set statusline+=\ %{LinterStatus()}
+
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 1
+
+let g:ale_sign_error = '●'
+let g:ale_sign_warning = '.'
+
 nmap ]l :ALENextWrap<CR>
 nmap [l :ALEPreviousWrap<CR>
 
@@ -229,6 +232,17 @@ colorscheme solarized
 set noshowmode
 set laststatus=2
 
+" Git Gutter column
+highlight clear SignColumn
+highlight GitGutterAdd ctermfg=green
+highlight GitGutterChange ctermfg=yellow
+highlight GitGutterDelete ctermfg=red
+highlight GitGutterChangeDelete ctermfg=yellow
+highlight GitGutterAdd guifg=green
+highlight GitGutterChange guifg=yellow
+highlight GitGutterDelete guifg=red
+highlight GitGutterChangeDelete guifg=yellow
+
 " Open files with hybrid line numbering
 set number relativenumber
 
@@ -285,6 +299,8 @@ nnoremap <CR> :nohlsearch<cr>
 nnoremap <Space><Space> <C-^>
 " yank to system clipboard
 nnoremap <leader>y "+y
+" toggle lint in file
+nnoremap <leader>' ALEToggle
 
 " TwitVim
 let twitvim_browser_cmd = 'open'
