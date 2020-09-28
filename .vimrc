@@ -300,7 +300,7 @@ nnoremap <Space><Space> <C-^>
 " yank to system clipboard
 nnoremap <leader>y "+y
 " toggle lint in file
-nnoremap <leader>' ALEToggle
+nnoremap <leader>' :ALEToggle<CR>
 
 " TwitVim
 let twitvim_browser_cmd = 'open'
