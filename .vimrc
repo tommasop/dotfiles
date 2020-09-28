@@ -318,6 +318,11 @@ nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
 " make test commands execute using dispatch.vim
 let test#strategy = "dispatch"
 
+" Vim Mergetool
+let g:mergetool_layout = 'mr'
+let g:mergetool_prefer_revision = 'local'
+nmap <leader>mt <plug>(MergetoolToggle)
+
 nnoremap <silent> <PageUp> <C-U>
 vnoremap <silent> <PageUp> <C-U>
 inoremap <silent> <PageUp> <C-\><C-O><C-U>
