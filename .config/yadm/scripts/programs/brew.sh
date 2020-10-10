@@ -34,6 +34,8 @@ PACKAGES=(
     cmake
     redis
     pgcli
+    ripgrep
+    cloc
 )
 
 echo "Installing packages..."

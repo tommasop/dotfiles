@@ -66,13 +66,16 @@ set smartcase                   " ... unless they contain at least one capital l
 let mapleader = ","
 let maplocalleader = ","
 
+set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow
+let g:rg_derive_root='true'
+
 " FZF (replaces Ctrl-P, FuzzyFinder and Command-T)
 set rtp+=/usr/local/opt/fzf
 set rtp+=~/.fzf
 nmap ; :Buffers<CR>
+nnoremap \ :RG<CR>
 nmap <Leader>r :Tags<CR>
 nmap <Leader>t :Files<CR>
-nmap <Leader>a :Ag<CR>
 
 " FZF color scheme updater from https://github.com/junegunn/fzf.vim/issues/59
 function! s:update_fzf_colors()
@@ -109,26 +112,23 @@ augroup _fzf
   autocmd VimEnter,ColorScheme * call <sid>update_fzf_colors()
 augroup END
 
-" Tell ack.vim to use ag (the Silver Searcher) instead
-let g:ackprg = 'ag --vimgrep'
-
 " Autocomplete with fzf
-function! s:fzf_insert(data)
-  execute 'normal!' (empty(s:fzf_query) ? 'a' : 'ciW')."\<C-R>=a:data\<CR>"
-  startinsert!
+inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
+  \ 'prefix': '^.*$',
+  \ 'source': 'rg -n ^ --color always',
+  \ 'options': '--ansi --delimiter : --nth 3..',
+  \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
+
+" Advanced ripgrep fzf delegates to ripgrep
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
 
-function! s:fzf_words(query)
-  let s:fzf_query = a:query
-  let matches = fzf#run({
-        \ 'source':  'cat /usr/share/dict/words',
-        \ 'sink':    function('s:fzf_insert'),
-        \ 'options': '--no-multi --query="'.escape(a:query, '"').'"',
-        \ 'down':    '40%'
-        \ })
-endfunction
-
-inoremap <silent> <C-X><C-W> <C-o>:call <SID>fzf_words(expand('<cWORD>'))<CR>
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 " ALE
 function! LinterStatus() abort

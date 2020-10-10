@@ -11,7 +11,7 @@ mp3 () {
 }
 # Playlist
 mp3p () {
-	youtube-dl --no-check-certificate --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
+	youtube-dl --geo-bypass --no-check-certificate --yes-playlist --socket-timeout 60 --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
 }
 
 # PostGIS install
@@ -41,3 +41,11 @@ function getkitty() {
 
 # Binary Systems Omniscent
 alias bs_dbs='ruby utils/scripts/dumps_list.rb'
+
+function cloc-git() {
+  git clone --depth 1 "$1" temp-linecount-repo &&
+    printf "('temp-linecount-repo' will be deleted automatically)\n\n\n" &&
+    cloc temp-linecount-repo &&
+    rm -rf temp-linecount-repo
+}
+
