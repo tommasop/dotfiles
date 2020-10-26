@@ -1,0 +1,12 @@
+# ~/.tmuxinator/people.yml
+
+name: logishift-report
+root: ~/code/work/binary_system/logishift-report
+windows:
+  - editor:
+      layout: f98d,230x59,0,0[230x40,0,0,0,230x18,0,41,4]
+      panes:
+        - nvim docker-compose.development.yml
+        - #empty
+  - server: LOCAL_USER_ID=1000 DOCKER_HOST_IP=`ip route | grep docker0 | awk '{print $9}'` ./compose-run.sh
+  - container: docker exec -it logishift-report_api_1 /bin/bash 

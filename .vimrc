@@ -16,68 +16,140 @@ endif
 "Vim Plug configuration
 call plug#begin('~/.vim/plugged')
 
+" ================= Functionalities ================= "
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'jeffkreeftmeijer/vim-numbertoggle'
-Plug 'itchyny/lightline.vim'
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'tpope/vim-fugitive'
-Plug 'cakebaker/scss-syntax.vim'
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'plasticboy/vim-markdown'
-Plug 'altercation/vim-colors-solarized'
-Plug 'vim-scripts/TwitVim'
-Plug 'AndrewRadev/splitjoin.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}         " LSP and more
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'airblade/vim-gitgutter'
-Plug 'mileszs/ack.vim'
 Plug 'desmap/ale-sensible' | Plug 'w0rp/ale'
+Plug 'janko-m/vim-test'
+Plug 'tpope/vim-dispatch'
+Plug 'mileszs/ack.vim'
 Plug 'sbdchd/neoformat'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+Plug 'AndrewRadev/splitjoin.vim'
+
+" ================= Aestethics ================= "
+Plug 'itchyny/lightline.vim'
+Plug 'altercation/vim-colors-solarized'
+
+" ================= Git ================= "
+Plug 'tpope/vim-fugitive'
+Plug 'samoshkin/vim-mergetool'
+Plug 'airblade/vim-gitgutter'
+
+
+" ================= Languages ================= "
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'plasticboy/vim-markdown'
+Plug 'elixir-editors/vim-elixir'
+Plug 'mhinz/vim-mix-format'
 Plug 'slim-template/vim-slim'
 Plug 'slime-lang/vim-slime-syntax'
 Plug 'isRuslan/vim-es6'
-" Plug 'ajh17/VimCompletesMe'
-Plug 'elixir-editors/vim-elixir'
-Plug 'mhinz/vim-mix-format'
-Plug 'janko-m/vim-test'
-Plug 'tpope/vim-dispatch'
-Plug 'lambdalisue/suda.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'samoshkin/vim-mergetool'
+
+" ================= Other Stuff ================= "
+Plug 'vim-scripts/TwitVim'
+
 call plug#end()
 
-" set omnifunc=syntaxcomplete#Complete
+" ================= General Config ================= "
 
-"" Whitespace
-set nowrap                      " don't wrap lines
-set tabstop=2 shiftwidth=2      " a tab is two spaces (or set this to 4)
-set expandtab                   " use spaces, not tabs (optional)
-set backspace=indent,eol,start  " backspace through everything in insert mode
-
-"" Searching
-set hlsearch                    " highlight matches
-set incsearch                   " incremental searching
-set ignorecase                  " searches are case insensitive...
-set smartcase                   " ... unless they contain at least one capital letter
+set nowrap                                              " don't wrap lines
+set tabstop=2 shiftwidth=2                              " a tab is two spaces (or set this to 4)
+set expandtab                                           " use spaces, not tabs (optional)
+set backspace=indent,eol,start                          " backspace through everything in insert mode
+set hlsearch                                            " highlight matches
+set incsearch                                           " incremental searching
+set ignorecase                                          " searches are case insensitive...
+set smartcase                                           " ... unless they contain at least one capital letter
+set encoding=utf-8                                      " text encoding
+set number                                              " enable numbers on the left
+set relativenumber                                      " current line is 0
+set title                                               " tab title as file name
+set mouse=a                                             " enable mouse scrolling
+set clipboard+=unnamedplus                              " use system clipboard by default
+set tabstop=4 softtabstop=4 shiftwidth=4 autoindent     " tab width
+set expandtab smarttab                                  " tab key actions
 " For any plugins that use this, make their keymappings use comma
 let mapleader = ","
 let maplocalleader = ","
+syntax enable
+set background=dark
+set t_Co=256
+colorscheme solarized
+set noshowmode
+set laststatus=2
+" set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow " use ripgrep instead of grep
 
-set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow
+" performance tweaks
+set nocursorline
+set nocursorcolumn
+set scrolljump=5
+set lazyredraw
+set redrawtime=10000
+set synmaxcol=180
+set re=1
+
+" required by coc
+set hidden
+set nobackup
+set nowritebackup
+set cmdheight=1
+set updatetime=300
+set shortmess+=c
+set signcolumn=yes
+
+" ======================== Plugin Configurations ======================== "
+
+"" coc
+
+" Navigate snippet placeholders using tab
+let g:coc_snippet_next = '<Tab>'
+let g:coc_snippet_prev = '<S-Tab>'
+
+" list of the extensions to make sure are always installed
+let g:coc_global_extensions = [
+            \'coc-yank',
+            \'coc-pairs',
+            \'coc-json',
+            \'coc-actions',
+            \'coc-css',
+            \'coc-html',
+            \'coc-tsserver',
+            \'coc-yaml',
+            \'coc-lists',
+            \'coc-snippets',
+            \'coc-python',
+            \'coc-clangd',
+            \'coc-prettier',
+            \'coc-xml',
+            \'coc-syntax',
+            \'coc-git',
+            \'coc-marketplace',
+            \'coc-highlight',
+            \'coc-flutter',
+            \'coc-explorer',
+            \]
+
 let g:rg_derive_root='true'
 
-" FZF (replaces Ctrl-P, FuzzyFinder and Command-T)
+"" fzf 
+
 set rtp+=/usr/local/opt/fzf
 set rtp+=~/.fzf
 nmap ; :Buffers<CR>
 nnoremap \ :RG<CR>
+nmap <Leader>a :Ag<CR>
 nmap <Leader>r :Tags<CR>
 nmap <Leader>t :Files<CR>
 
-" FZF color scheme updater from https://github.com/junegunn/fzf.vim/issues/59
+" fzf color scheme updater from https://github.com/junegunn/fzf.vim/issues/59
 function! s:update_fzf_colors()
   let rules =
         \ { 'fg':      [['Normal',       'fg']],
@@ -112,14 +184,14 @@ augroup _fzf
   autocmd VimEnter,ColorScheme * call <sid>update_fzf_colors()
 augroup END
 
-" Autocomplete with fzf
+"" autocomplete with fzf
 inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
   \ 'prefix': '^.*$',
   \ 'source': 'rg -n ^ --color always',
   \ 'options': '--ansi --delimiter : --nth 3..',
   \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 
-" Advanced ripgrep fzf delegates to ripgrep
+" advanced ripgrep fzf delegates to ripgrep
 function! RipgrepFzf(query, fullscreen)
   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
   let initial_command = printf(command_fmt, shellescape(a:query))
@@ -130,7 +202,8 @@ endfunction
 
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
-" ALE
+"" ale
+
 function! LinterStatus() abort
     let l:counts = ale#statusline#Count(bufnr(''))
 
@@ -154,22 +227,8 @@ let g:ale_sign_warning = '.'
 nmap ]l :ALENextWrap<CR>
 nmap [l :ALEPreviousWrap<CR>
 
-" NEOFORMAT
-" Enable alignment
-" let g:neoformat_basic_format_align = 1
-" Enable tab to spaces conversion
-" let g:neoformat_basic_format_retab = 1
-" Enable trimmming of trailing whitespace
-" let g:neoformat_basic_format_trim = 1
-" let g:neoformat_enabled_ruby = ['rubocop']
-" augroup fmt
-"  autocmd!
-"  autocmd BufWritePre * undojoin | Neoformat
-" augroup END
-" To run manually
-" nnoremap <leader>fm :Neoformat<CR>
+"" lightline
 
-" Lightline
 let g:lightline = {
   \ 'colorscheme': 'solarized',
   \ 'active': {
@@ -220,19 +279,9 @@ function! s:MaybeUpdateLightline()
   end
 endfunction
 
-" ----------------------------------------------------------------------------
-" COLORS
-" ----------------------------------------------------------------------------
-" Make sure colored syntax mode is on, and make it Just Work with 256-color terminals.
-" let g:rehash256 = 1
-syntax enable
-set background=dark
-set t_Co=256
-colorscheme solarized
-set noshowmode
-set laststatus=2
 
-" Git Gutter column
+"" git gutter column
+
 highlight clear SignColumn
 highlight GitGutterAdd ctermfg=green
 highlight GitGutterChange ctermfg=yellow
@@ -265,8 +314,6 @@ if has('nvim')
   let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'
 endif
 
-set clipboard+=unnamedplus
-
 " NERDTree to C-e
 map <C-e> :NERDTreeToggle<CR>
 " ##############################################################################
@@ -297,15 +344,13 @@ imap jk <esc>
 nnoremap <CR> :nohlsearch<cr>
 " switch to alternate buffer
 nnoremap <Space><Space> <C-^>
-" yank to system clipboard
-nnoremap <leader>y "+y
 " toggle lint in file
 nnoremap <leader>' :ALEToggle<CR>
 
-" TwitVim
+"" TwitVim
 let twitvim_browser_cmd = 'open'
 
-"Elixir mix format
+"" elixir mix format
 let g:mix_format_on_save = 1
 
 " Vim Test
@@ -317,6 +362,10 @@ nmap <silent> t<C-l> :TestLast<CR>    " t Ctrl+l
 nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
 " make test commands execute using dispatch.vim
 let test#strategy = "dispatch"
+
+" fugitive mappings
+nmap <leader>gd :Gdiffsplit<CR>
+nmap <leader>gb :Gblame<CR>
 
 " Vim Mergetool
 let g:mergetool_layout = 'mr'
