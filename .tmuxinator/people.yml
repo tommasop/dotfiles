@@ -10,3 +10,9 @@ windows:
         - #empty
   - server: LOCAL_USER_ID=1000 DOCKER_HOST_IP=`ip route | grep docker0 | awk '{print $9}'` ./compose-run.sh
   - container: docker exec -it logishift-people_celery_api_1 /bin/bash 
+on_project_start:
+  - export RBENV_DIR=
+  - export RBENV_VERSION=
+on_project_restart:
+  - export RBENV_DIR=
+  - export RBENV_VERSION=

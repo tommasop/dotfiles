@@ -336,7 +336,7 @@ nmap <Leader>p "+p
 nmap <Leader>P "+P
 " Enter in visual mode
 nmap <Leader><Leader> V
-
+nmap <Leader>f :let @+ = expand("%:p")<CR>
 imap jk <esc>
 
 " clear search buffer when hitting return, so what you search for is not

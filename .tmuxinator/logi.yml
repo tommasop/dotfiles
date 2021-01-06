@@ -12,3 +12,9 @@ windows:
   - server: bundle exec rails s
   - logs: tail -f log/development.log
   - console: bundle exec rails c
+on_project_start:
+  - export RBENV_DIR=
+  - export RBENV_VERSION=
+on_project_restart:
+  - export RBENV_DIR=
+  - export RBENV_VERSION=

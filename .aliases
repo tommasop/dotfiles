@@ -12,14 +12,25 @@ fi
 if type nvim > /dev/null 2>&1; then
   alias vim='nvim'
 fi
+alias ts="tmuxinator start"
+# To be run as sudo su
+alias free_mem="sync && echo 3 > /proc/sys/vm/drop_caches"
+alias free_swap="swapoff -a && swapon -a"
 # Youtube Dl music extraction
 mp3 () {
-	youtube-dl --no-check-certificate --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(title)s.%(ext)s' "$1"
+	youtube-dlc --no-check-certificate --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(title)s.%(ext)s' "$1"
 }
 # Playlist
 mp3p () {
-	youtube-dl --geo-bypass --no-check-certificate --yes-playlist --socket-timeout 60 --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
+	youtube-dlc --geo-bypass --no-check-certificate --yes-playlist --socket-timeout 60 --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
 }
+
+video-list () {
+	youtube-dlc --geo-bypass --no-check-certificate --yes-playlist --socket-timeout 60 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
+}
+
+alias stale_branches='git branches --sort=committerdate --merged | grep '\''Tommaso Patrizi'\'' | awk '\''{print $6}'\'' | sed '\''s/origin\///g'\'' | xargs echo' 
+alias stale_branches_r='git branches --sort=committerdate --merged | grep '\''Tommaso Patrizi'\'' | awk '\''{print $6}'\'' | xargs echo' 
 
 # PostGIS install
 function getpostigs () {
