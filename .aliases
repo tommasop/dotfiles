@@ -3,7 +3,7 @@ alias poston="pg_ctl start -D /home/linuxbrew/.linuxbrew/var/postgres"
 alias postoff="pg_ctl stop -D /home/linuxbrew/.linuxbrew/var/postgres"
 # pass
 alias pim="pass insert -m"
-# open
+# command to open one file from the commandline
 alias open='xdg-open'
 # alias cat to bat if installed
 if hash bat 2>/dev/null; then
@@ -13,9 +13,11 @@ if type nvim > /dev/null 2>&1; then
   alias vim='nvim'
 fi
 alias ts="tmuxinator start"
+
 # To be run as sudo su
 alias free_mem="sync && echo 3 > /proc/sys/vm/drop_caches"
 alias free_swap="swapoff -a && swapon -a"
+
 # Youtube Dl music extraction
 mp3 () {
 	youtube-dlc --no-check-certificate --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(title)s.%(ext)s' "$1"
@@ -24,7 +26,6 @@ mp3 () {
 mp3p () {
 	youtube-dlc --geo-bypass --no-check-certificate --yes-playlist --socket-timeout 60 --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
 }
-
 video-list () {
 	youtube-dlc --geo-bypass --no-check-certificate --yes-playlist --socket-timeout 60 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
 }
@@ -47,23 +48,14 @@ function getpostigs () {
     rm -rf tmp/
 }
 
-#Kitty terminal install
-function getkitty() {
-  mkdir .local/bin
-  curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-  ln -s ~/.local/kitty.app/bin/kitty ~/.local/bin/
-  cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications
-  sed -i "s/Icon\=kitty/Icon\=\/home\/$USER\/.local\/kitty.app\/share\/icons\/hicolor\/256x256\/apps\/kitty.png/g" ~/.local/share/applications/kitty.desktop
-  sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator ~/.local/bin/kitty 50
-}
-
-# Binary Systems Omniscent
-alias bs_dbs='ruby utils/scripts/dumps_list.rb'
-
 function cloc-git() {
   git clone --depth 1 "$1" temp-linecount-repo &&
     printf "('temp-linecount-repo' will be deleted automatically)\n\n\n" &&
     cloc temp-linecount-repo &&
     rm -rf temp-linecount-repo
 }
+
+# Binary Systems
+alias bs_dbs='ruby utils/scripts/dumps_list.rb'
+alias dc='docker-compose -f docker-compose.common.yml -f docker-compose.development.yml --env-file ~/.docker.env up --build'
 

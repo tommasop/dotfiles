@@ -1,15 +1,15 @@
-# ~/.tmuxinator/geomap.yml
+# ~/.tmuxinator/symplyfatt.yml
 # you can make as many tabs as you wish...
 
-name: geomap
-root: ~/code/work/astral/geomap
+name: fatt
+root: ~/code/personal/symplyfatt
 windows:
   - editor:
       layout: f98d,230x59,0,0[230x40,0,0,0,230x18,0,41,4]
       panes:
         - nvim Gemfile
         - #empty
-  - server: bundle exec rails s -p 8888
+  - server: bundle exec rails s -p 9999
   - logs: tail -f log/development.log
   - console: bundle exec rails c
 on_project_start:
