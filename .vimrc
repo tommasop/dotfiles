@@ -37,9 +37,7 @@ Plug 'altercation/vim-colors-solarized'
 
 " ================= Git ================= "
 Plug 'tpope/vim-fugitive'
-Plug 'samoshkin/vim-mergetool'
 Plug 'airblade/vim-gitgutter'
-
 
 " ================= Languages ================= "
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
@@ -363,9 +361,11 @@ nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
 " make test commands execute using dispatch.vim
 let test#strategy = "dispatch"
 
-" fugitive mappings
-nmap <leader>gd :Gdiffsplit<CR>
+" fugitive Conflict Resolution
+nnoremap <leader>gd :Gvdiff<CR>
 nmap <leader>gb :Gblame<CR>
+nnoremap gdh :diffget //2<CR>
+nnoremap gdl :diffget //3<CR>
 
 " Vim Mergetool
 let g:mergetool_layout = 'mr'
