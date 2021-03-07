@@ -55,6 +55,11 @@ function cloc-git() {
     rm -rf temp-linecount-repo
 }
 
+fdiff() {
+  preview="git diff $@ --color=always -- {-1}"
+  git diff $@ --name-only | fzf -m --ansi --preview $preview
+}
+
 # Binary Systems
 alias bs_dbs='ruby utils/scripts/dumps_list.rb'
 alias dc='docker-compose -f docker-compose.common.yml -f docker-compose.development.yml --env-file ~/.docker.env up --build'
