@@ -60,6 +60,10 @@ fdiff() {
   git diff $@ --name-only | fzf -m --ansi --preview $preview
 }
 
+gch() {
+ git checkout "$(git branch --all | fzf| tr -d '[:space:]')"
+}
+
 # Binary Systems
 alias bs_dbs='ruby utils/scripts/dumps_list.rb'
 alias dc='docker-compose -f docker-compose.common.yml -f docker-compose.development.yml --env-file ~/.docker.env up --build'

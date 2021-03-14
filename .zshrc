@@ -19,43 +19,32 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="$PATH:/snap/bin"
 export PATH="$PATH:/home/linuxbrew/.linuxbrew/Cellar/texlive/20190406/"
 
+# docker env variables
+export BITBUCKET_USERNAME=binarysystem_deploy
+export BITBUCKET_PASSWORD=Uxoo4unu
+export GEMS_USERNAME=developer
+export GEMS_PASSWORD=B1nAr12020
+export USER_ID=$(id -u)
+export GROUP_ID=$(id -g)
+export MY_IP=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
+
+
+
 # export TERM=xterm
 export EDITOR=nvim
 export ERL_AFLAGS="-kernel shell_history enabled"
 
-# Check if zplug is installed
-if [[ ! -d $ZPLUG_HOME ]]; then
-  git clone https://github.com/zplug/zplug $ZPLUG_HOME
-  source $ZPLUG_HOME/init.zsh && zplug update --self
-fi
+source ~/.zsh-plugins/zsh-snap/znap.zsh
 
-source $ZPLUG_HOME/init.zsh
+# `znap prompt` makes your prompt appear in ~40ms. You can start typing right away!
+znap prompt denysdovhan/spaceship-prompt
 
-# Grab binaries from GitHub Releases
-# and rename with the "rename-to:" tag
-zplug "junegunn/fzf-bin", \
-    from:gh-r, \
-    as:command, \
-    rename-to:fzf \
-    use:"*darwin_amd64"
-
-# Supports oh-my-zsh plugins and the like
-zplug "plugins/git", from:oh-my-zsh, ignore:oh-my-zsh.sh
-zplug "plugins/rails", from:oh-my-zsh, ignore:oh-my-zsh.sh
-zplug "plugins/asdf", from:oh-my-zsh, ignore:oh-my-zsh.sh
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
-
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-
-# Then, source plugins and add commands to $PATH
-zplug load # --verbose
+# Use `znap source` to load only those parts of Oh-My-Zsh or Prezto that you really need:
+znap source ohmyzsh/ohmyzsh plugins/git
+znap source ohmyzsh/ohmyzsh plugins/asdf
+znap source ohmyzsh/ohmyzsh plugins/rails
+znap source sorin-ionescu/prezto modules/{environment,history}
+znap source Aloxaf/fzf-tab
 
 source $HOME/.asdf/asdf.sh
 

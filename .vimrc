@@ -5,6 +5,7 @@ syntax enable
 set encoding=utf-8
 set showcmd                     " display incomplete commands
 set nobackup                    " no swap files
+set wildmenu
 set nowritebackup
 "Vim Plug autoload
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -19,7 +20,7 @@ call plug#begin('~/.vim/plugged')
 " ================= Functionalities ================= "
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}         " LSP and more
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'desmap/ale-sensible' | Plug 'w0rp/ale'
 Plug 'janko-m/vim-test'
@@ -38,6 +39,7 @@ Plug 'altercation/vim-colors-solarized'
 " ================= Git ================= "
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+" Plug 'stsewd/fzf-checkout.vim'
 
 " ================= Languages ================= "
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
@@ -71,19 +73,42 @@ set number                                              " enable numbers on the 
 set relativenumber                                      " current line is 0
 set title                                               " tab title as file name
 set mouse=a                                             " enable mouse scrolling
-set clipboard+=unnamedplus                              " use system clipboard by default
+
+" Use clipboard as default register
+if system('uname -s') == "Darwin\n"
+  set clipboard=unnamed "OSX
+else
+  set clipboard=unnamedplus "Linux
+endif
+
+" Shortcut to use blackhole register by default
+nnoremap d "_d
+vnoremap d "_d
+nnoremap D "_D
+vnoremap D "_D
+nnoremap c "_c
+vnoremap c "_c
+nnoremap C "_C
+vnoremap C "_C
+nnoremap x "_x
+vnoremap x "_x
+nnoremap X "_X
+vnoremap X "_X
+
 set tabstop=4 softtabstop=4 shiftwidth=4 autoindent     " tab width
 set expandtab smarttab                                  " tab key actions
+
 " For any plugins that use this, make their keymappings use comma
 let mapleader = ","
 let maplocalleader = ","
+let g:mapleader = ","
+
 syntax enable
 set background=dark
 set t_Co=256
 colorscheme solarized
 set noshowmode
 set laststatus=2
-" set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow " use ripgrep instead of grep
 
 " performance tweaks
 set nocursorline
@@ -102,6 +127,10 @@ set cmdheight=1
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
+
+" use system ruby for nvim instead of per project ruby
+" let g:ruby_host_prog = '/home/tommasop/.asdf/installs/ruby/2.7.2/bin/neovim-ruby-host'
+" let g:node_host_prog = '/home/tommasop/.asdf/installs/nodejs/14.6.0/.npm/bin/neovim-node-host'
 
 " ======================== Plugin Configurations ======================== "
 
@@ -133,19 +162,27 @@ let g:coc_global_extensions = [
             \'coc-highlight',
             \'coc-flutter',
             \'coc-explorer',
+            \'coc-solargraph',
             \]
 
 let g:rg_derive_root='true'
 
 "" fzf 
+"set rtp+=/home/tommasop/.fzf
 
-set rtp+=/usr/local/opt/fzf
-set rtp+=~/.fzf
-nmap ; :Buffers<CR>
-nnoremap \ :RG<CR>
-nmap <Leader>a :Ag<CR>
-nmap <Leader>r :Tags<CR>
-nmap <Leader>t :Files<CR>
+"command! -bang -nargs=* Rg
+"  \ call fzf#vim#grep(
+"  \   'rg --column --line-number --hidden --ignore-case --no-heading --color=always '.shellescape(<q-args>), 1,
+"  \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+"  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+"  \   <bang>0)
+
+nmap ; :FzfBuffers<CR>
+nnoremap \ :FzfRg<CR>
+nmap <Leader>a :FzfAg<CR>
+nmap <Leader>r :FzfTags<CR>
+nmap <Leader>t :FzfFiles<CR>
+nmap <Leader>g :FzfGFiles<CR>
 
 " fzf color scheme updater from https://github.com/junegunn/fzf.vim/issues/59
 function! s:update_fzf_colors()
@@ -189,16 +226,23 @@ inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
   \ 'options': '--ansi --delimiter : --nth 3..',
   \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 
+"" fzf-checkout
+let g:fzf_command_prefix = 'Fzf'
+let g:fzf_checkout_git_options = '--sort=-committerdate'
+let g:fzf_tag_actions = {
+      \ 'checkout': {'execute': '!{git} checkout {branch}'},
+      \}
+
 " advanced ripgrep fzf delegates to ripgrep
 function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --ignore-case -- %s || true'
   let initial_command = printf(command_fmt, shellescape(a:query))
   let reload_command = printf(command_fmt, '{q}')
   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
 
-command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+command! -nargs=* -bang FzFRG call RipgrepFzf(<q-args>, <bang>0)
 
 "" ale
 
@@ -276,7 +320,6 @@ function! s:MaybeUpdateLightline()
     call lightline#update()
   end
 endfunction
-
 
 "" git gutter column
 
@@ -367,11 +410,6 @@ nmap <leader>gb :Gblame<CR>
 nnoremap gdh :diffget //2<CR>
 nnoremap gdl :diffget //3<CR>
 
-" Vim Mergetool
-let g:mergetool_layout = 'mr'
-let g:mergetool_prefer_revision = 'local'
-nmap <leader>mt <plug>(MergetoolToggle)
-
 nnoremap <silent> <PageUp> <C-U>
 vnoremap <silent> <PageUp> <C-U>
 inoremap <silent> <PageUp> <C-\><C-O><C-U>
@@ -379,3 +417,21 @@ inoremap <silent> <PageUp> <C-\><C-O><C-U>
 nnoremap <silent> <PageDown> <C-D>
 vnoremap <silent> <PageDown> <C-D>
 inoremap <silent> <PageDown> <C-\><C-O><C-D>
+
+" Shortcut to use clipboard with <leader>
+nnoremap <leader>d d
+vnoremap <leader>d d
+nnoremap <leader>D D
+vnoremap <leader>D D
+nnoremap <leader>c c
+vnoremap <leader>c c
+nnoremap <leader>C C
+vnoremap <leader>C C
+nnoremap <leader>x x
+vnoremap <leader>x x
+nnoremap <leader>X X
+vnoremap <leader>X X
+
+" Save register to clipboard even after vim session is closed. Requires
+" install of xsel. Eg. `sudo apt-get install xsel`
+autocmd VimLeave * call system("echo -n $'" . escape(getreg(), "'") . "' | xsel -ib")
