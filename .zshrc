@@ -44,6 +44,7 @@ znap source ohmyzsh/ohmyzsh plugins/asdf
 znap source ohmyzsh/ohmyzsh plugins/rails
 znap source sorin-ionescu/prezto modules/{environment,history}
 znap source Aloxaf/fzf-tab
+znap source zsh-syntax-highlighting
 
 source $HOME/.asdf/asdf.sh
 

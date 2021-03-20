@@ -35,8 +35,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 " ================= Aestethics ================= "
 Plug 'itchyny/lightline.vim'
 "Plug 'altercation/vim-colors-solarized'
-"Plug 'sonph/onehalf', { 'rtp': 'vim' }
-Plug 'kyoz/purify', { 'rtp': 'vim' }
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 " ================= Git ================= "
 Plug 'tpope/vim-fugitive'
@@ -94,7 +93,8 @@ let g:mapleader = ","
 syntax on
 set t_Co=256
 set cursorline
-colorscheme purify
+set background=dark
+colorscheme dracula
 
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -102,10 +102,6 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
-"syntax enable
-"set background=dark
-"set t_Co=256
-"colorscheme solarized
 set noshowmode
 set laststatus=2
 
@@ -272,7 +268,7 @@ nmap [l :ALEPreviousWrap<CR>
 "" lightline
 
 let g:lightline = {
-  \ 'colorscheme': 'purify',
+  \ 'colorscheme': 'dracula',
   \ 'active': {
   \   'left': [['mode', 'paste'], ['filename', 'modified']],
   \   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
