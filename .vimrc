@@ -34,12 +34,14 @@ Plug 'AndrewRadev/splitjoin.vim'
 
 " ================= Aestethics ================= "
 Plug 'itchyny/lightline.vim'
-Plug 'altercation/vim-colors-solarized'
+"Plug 'altercation/vim-colors-solarized'
+"Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'kyoz/purify', { 'rtp': 'vim' }
 
 " ================= Git ================= "
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-" Plug 'stsewd/fzf-checkout.vim'
+Plug 'stsewd/fzf-checkout.vim'
 
 " ================= Languages ================= "
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
@@ -81,20 +83,6 @@ else
   set clipboard=unnamedplus "Linux
 endif
 
-" Shortcut to use blackhole register by default
-nnoremap d "_d
-vnoremap d "_d
-nnoremap D "_D
-vnoremap D "_D
-nnoremap c "_c
-vnoremap c "_c
-nnoremap C "_C
-vnoremap C "_C
-nnoremap x "_x
-vnoremap x "_x
-nnoremap X "_X
-vnoremap X "_X
-
 set tabstop=4 softtabstop=4 shiftwidth=4 autoindent     " tab width
 set expandtab smarttab                                  " tab key actions
 
@@ -103,10 +91,21 @@ let mapleader = ","
 let maplocalleader = ","
 let g:mapleader = ","
 
-syntax enable
-set background=dark
+syntax on
 set t_Co=256
-colorscheme solarized
+set cursorline
+colorscheme purify
+
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+"syntax enable
+"set background=dark
+"set t_Co=256
+"colorscheme solarized
 set noshowmode
 set laststatus=2
 
@@ -168,6 +167,7 @@ let g:coc_global_extensions = [
 let g:rg_derive_root='true'
 
 "" fzf 
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
 "set rtp+=/home/tommasop/.fzf
 
 "command! -bang -nargs=* Rg
@@ -178,7 +178,7 @@ let g:rg_derive_root='true'
 "  \   <bang>0)
 
 nmap ; :FzfBuffers<CR>
-nnoremap \ :FzfRg<CR>
+nnoremap \ :FzFRG<CR>
 nmap <Leader>a :FzfAg<CR>
 nmap <Leader>r :FzfTags<CR>
 nmap <Leader>t :FzfFiles<CR>
@@ -272,7 +272,7 @@ nmap [l :ALEPreviousWrap<CR>
 "" lightline
 
 let g:lightline = {
-  \ 'colorscheme': 'solarized',
+  \ 'colorscheme': 'purify',
   \ 'active': {
   \   'left': [['mode', 'paste'], ['filename', 'modified']],
   \   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
@@ -370,11 +370,6 @@ nmap <silent> <c-l> :wincmd l<CR>
 
 " Leader mappings
 nnoremap <Leader>w :w<CR>
-" Copy and paste into clipboard
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
 " Enter in visual mode
 nmap <Leader><Leader> V
 nmap <Leader>f :let @+ = expand("%:p")<CR>
@@ -417,21 +412,3 @@ inoremap <silent> <PageUp> <C-\><C-O><C-U>
 nnoremap <silent> <PageDown> <C-D>
 vnoremap <silent> <PageDown> <C-D>
 inoremap <silent> <PageDown> <C-\><C-O><C-D>
-
-" Shortcut to use clipboard with <leader>
-nnoremap <leader>d d
-vnoremap <leader>d d
-nnoremap <leader>D D
-vnoremap <leader>D D
-nnoremap <leader>c c
-vnoremap <leader>c c
-nnoremap <leader>C C
-vnoremap <leader>C C
-nnoremap <leader>x x
-vnoremap <leader>x x
-nnoremap <leader>X X
-vnoremap <leader>X X
-
-" Save register to clipboard even after vim session is closed. Requires
-" install of xsel. Eg. `sudo apt-get install xsel`
-autocmd VimLeave * call system("echo -n $'" . escape(getreg(), "'") . "' | xsel -ib")
