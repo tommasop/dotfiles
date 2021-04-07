@@ -52,9 +52,11 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'slim-template/vim-slim'
 Plug 'slime-lang/vim-slime-syntax'
-Plug 'isRuslan/vim-es6'
+Plug 'pangloss/vim-javascript'
+Plug 'posva/vim-vue'
 
 " ================= Other Stuff ================= "
+Plug 'n0v1c3/vira', { 'do': './install.sh' }
 Plug 'vim-scripts/TwitVim'
 
 call plug#end()
@@ -158,20 +160,13 @@ let g:coc_global_extensions = [
             \'coc-flutter',
             \'coc-explorer',
             \'coc-solargraph',
+            \'coc-vetur',
             \]
 
 let g:rg_derive_root='true'
 
 "" fzf 
 let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
-"set rtp+=/home/tommasop/.fzf
-
-"command! -bang -nargs=* Rg
-"  \ call fzf#vim#grep(
-"  \   'rg --column --line-number --hidden --ignore-case --no-heading --color=always '.shellescape(<q-args>), 1,
-"  \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
-"  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
-"  \   <bang>0)
 
 nmap ; :FzfBuffers<CR>
 nnoremap \ :FzFRG<CR>
