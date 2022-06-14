@@ -35,6 +35,9 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export EDITOR=nvim
 export ERL_AFLAGS="-kernel shell_history enabled"
 
+# Load all stock functions (from $fpath files) called below.
+autoload -U compaudit compinit
+
 source ~/.zsh-plugins/zsh-snap/znap.zsh
 
 # `znap prompt` makes your prompt appear in ~40ms. You can start typing right away!
@@ -43,7 +46,7 @@ znap prompt denysdovhan/spaceship-prompt
 # Use `znap source` to load only those parts of Oh-My-Zsh or Prezto that you really need:
 znap source ohmyzsh/ohmyzsh plugins/git
 znap source ohmyzsh/ohmyzsh plugins/asdf
-znap source ohmyzsh/ohmyzsh plugins/rails
+# znap source ohmyzsh/ohmyzsh plugins/rails
 znap source sorin-ionescu/prezto modules/{environment,history}
 znap source Aloxaf/fzf-tab
 znap source zsh-syntax-highlighting

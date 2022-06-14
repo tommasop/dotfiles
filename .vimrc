@@ -19,7 +19,12 @@ call plug#begin('~/.vim/plugged')
 
 " ================= Functionalities ================= "
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}         " LSP and more
+"Plug 'kyazdani42/nvim-web-devicons' " for file icons
+"Plug 'kyazdani42/nvim-tree.lua'
+"Plug 'onsails/lspkind-nvim'
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}         " LSP and more
+Plug 'williamboman/nvim-lsp-installer'
+Plug 'neovim/nvim-lspconfig'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'desmap/ale-sensible' | Plug 'w0rp/ale'
@@ -29,16 +34,18 @@ Plug 'mileszs/ack.vim'
 Plug 'sbdchd/neoformat'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-abolish'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'AndrewRadev/splitjoin.vim'
 
 " ================= Aestethics ================= "
 Plug 'itchyny/lightline.vim'
-"Plug 'altercation/vim-colors-solarized'
 Plug 'dracula/vim', { 'as': 'dracula' }
 
 " ================= Git ================= "
 Plug 'tpope/vim-fugitive'
+" Gbrowse for bitbucket
+Plug 'tommcdo/vim-fubitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'stsewd/fzf-checkout.vim'
 
@@ -134,36 +141,83 @@ set signcolumn=yes
 "" coc
 
 " Navigate snippet placeholders using tab
-let g:coc_snippet_next = '<Tab>'
-let g:coc_snippet_prev = '<S-Tab>'
-
+"let g:coc_snippet_next = '<Tab>'
+"let g:coc_snippet_prev = '<S-Tab>'
+"
 " list of the extensions to make sure are always installed
-let g:coc_global_extensions = [
-            \'coc-yank',
-            \'coc-pairs',
-            \'coc-json',
-            \'coc-actions',
-            \'coc-css',
-            \'coc-html',
-            \'coc-tsserver',
-            \'coc-yaml',
-            \'coc-lists',
-            \'coc-snippets',
-            \'coc-python',
-            \'coc-clangd',
-            \'coc-prettier',
-            \'coc-xml',
-            \'coc-syntax',
-            \'coc-git',
-            \'coc-marketplace',
-            \'coc-highlight',
-            \'coc-flutter',
-            \'coc-explorer',
-            \'coc-solargraph',
-            \'coc-vetur',
-            \]
+"let g:coc_global_extensions = [
+"            \'coc-yank',
+"            \'coc-pairs',
+"            \'coc-json',
+"            \'coc-actions',
+"            \'coc-css',
+"            \'coc-html',
+"            \'coc-tsserver',
+"            \'coc-yaml',
+"            \'coc-lists',
+"            \'coc-snippets',
+"            \'coc-pyright',
+"            \'coc-clangd',
+"            \'coc-prettier',
+"            \'coc-xml',
+"            \'coc-syntax',
+"            \'coc-git',
+"            \'coc-marketplace',
+"            \'coc-highlight',
+"            \'coc-flutter',
+"            \'coc-explorer',
+"            \'coc-solargraph',
+"            \'coc-vetur',
+"            \'coc-go',
+"            \]
+" try to set root patterns for pyright
+"autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv', '.venv', 'setup.cfg', 'setup.py', 'pyproject.toml', 'pyrightconfig.json']
+"
+"let g:rg_derive_root='true'
 
-let g:rg_derive_root='true'
+lua << EOF
+require("nvim-lsp-installer").setup({
+    automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
+    ui = {
+        icons = {
+            server_installed = "✓",
+            server_pending = "➜",
+            server_uninstalled = "✗"
+        }
+    }
+})
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+end
+local servers = { 'pyright', 'tsserver', 'solargraph', 'sorbet', 'elixirls' }
+for _, lsp in pairs(servers) do
+  require('lspconfig')[lsp].setup {
+    on_attach = on_attach,
+  }
+end
+EOF
 
 "" fzf 
 let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
@@ -342,12 +396,13 @@ if !has('nvim')
 endif
 
 if has('nvim')
-  let g:python_host_prog = '/home/linuxbrew/.linuxbrew/bin/python'
+  let g:python_host_prog = '/usr/bin/python'
   let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'
 endif
 
 " NERDTree to C-e
 map <C-e> :NERDTreeToggle<CR>
+
 " ##############################################################################
 " Easier split navigation
 " ##############################################################################
@@ -363,7 +418,7 @@ nmap <silent> <c-l> :wincmd l<CR>
 nnoremap <Leader>w :w<CR>
 " Enter in visual mode
 nmap <Leader><Leader> V
-nmap <Leader>f :let @+ = expand("%:p")<CR>
+nmap <Leader>f :let @+ = expand("%")<CR>
 imap jk <esc>
 
 " clear search buffer when hitting return, so what you search for is not
@@ -391,6 +446,7 @@ nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
 let test#strategy = "dispatch"
 
 " fugitive Conflict Resolution
+let g:fugitive_domain_pattern = 'binarysystem\.atlassian\.net'
 nnoremap <leader>gd :Gvdiff<CR>
 nmap <leader>gb :Gblame<CR>
 nnoremap gdh :diffget //2<CR>

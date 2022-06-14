@@ -20,14 +20,14 @@ alias free_swap="swapoff -a && swapon -a"
 
 # Youtube Dl music extraction
 mp3 () {
-	youtube-dlc --no-check-certificate --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(title)s.%(ext)s' "$1"
+	youtube-dl --no-check-certificate --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(title)s.%(ext)s' "$1"
 }
 # Playlist
 mp3p () {
-	youtube-dlc --geo-bypass --no-check-certificate --yes-playlist --socket-timeout 60 --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
+	youtube-dl --geo-bypass --no-check-certificate --yes-playlist --socket-timeout 60 --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
 }
 video-list () {
-	youtube-dlc --geo-bypass --no-check-certificate --yes-playlist --socket-timeout 60 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
+	youtube-dl --geo-bypass --no-check-certificate --yes-playlist --socket-timeout 60 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
 }
 
 alias stale_branches='git branches --sort=committerdate --merged | grep '\''Tommaso Patrizi'\'' | awk '\''{print $6}'\'' | sed '\''s/origin\///g'\'' | xargs echo' 
@@ -64,7 +64,19 @@ gch() {
  git checkout "$(git branch --all | fzf| tr -d '[:space:]')"
 }
 
+# using ripgrep combined with preview
+# find-in-file - usage: fif <searchTerm>
+fif() {
+  if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
+  rg --files-with-matches --no-messages "$1" | fzf --preview "highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
+}
+
 # Binary Systems
 alias bs_dbs='ruby utils/scripts/dumps_list.rb'
 alias dc='docker-compose -f docker-compose.common.yml -f docker-compose.development.yml --env-file ~/.docker.env up --build'
 
+function ndeploy() {
+  cd /home/tommasop/code/work/binary_system/bs_omniscient
+  ./run_deployer.sh ./bin/deployer.sh $1 deploy
+  cd -
+}

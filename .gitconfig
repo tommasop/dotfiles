@@ -14,9 +14,15 @@
 [core]
   excludesfile = ~/.gitignore
   autocrlf = input
+# define command which will be used when "nvim" is set as a merge tool
+[mergetool "nvim"]
+  cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
+# set "nvim" as tool for merging
 [merge]
-  ff = only
-	conflictstyle = diff3
+  tool = nvim
+# automatically launch merge tool without displaying a prompt
+[mergetool]
+  prompt = false
 [commit]
   template = ~/.gitmessage
 [fetch]
@@ -28,3 +34,5 @@
 [user]
 	name = Tommaso Patrizi
 	email = tommasop@gmail.com
+[submodule]
+	recurse = true
