@@ -18,9 +18,9 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " ================= Functionalities ================= "
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-"Plug 'kyazdani42/nvim-web-devicons' " for file icons
-"Plug 'kyazdani42/nvim-tree.lua'
+"Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
 "Plug 'onsails/lspkind-nvim'
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}         " LSP and more
 Plug 'williamboman/nvim-lsp-installer'
@@ -37,6 +37,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'danilamihailov/beacon.nvim'
 
 " ================= Aestethics ================= "
 Plug 'itchyny/lightline.vim'
@@ -132,49 +133,6 @@ set updatetime=300
 set shortmess+=c
 set signcolumn=yes
 
-" use system ruby for nvim instead of per project ruby
-" let g:ruby_host_prog = '/home/tommasop/.asdf/installs/ruby/2.7.2/bin/neovim-ruby-host'
-" let g:node_host_prog = '/home/tommasop/.asdf/installs/nodejs/14.6.0/.npm/bin/neovim-node-host'
-
-" ======================== Plugin Configurations ======================== "
-
-"" coc
-
-" Navigate snippet placeholders using tab
-"let g:coc_snippet_next = '<Tab>'
-"let g:coc_snippet_prev = '<S-Tab>'
-"
-" list of the extensions to make sure are always installed
-"let g:coc_global_extensions = [
-"            \'coc-yank',
-"            \'coc-pairs',
-"            \'coc-json',
-"            \'coc-actions',
-"            \'coc-css',
-"            \'coc-html',
-"            \'coc-tsserver',
-"            \'coc-yaml',
-"            \'coc-lists',
-"            \'coc-snippets',
-"            \'coc-pyright',
-"            \'coc-clangd',
-"            \'coc-prettier',
-"            \'coc-xml',
-"            \'coc-syntax',
-"            \'coc-git',
-"            \'coc-marketplace',
-"            \'coc-highlight',
-"            \'coc-flutter',
-"            \'coc-explorer',
-"            \'coc-solargraph',
-"            \'coc-vetur',
-"            \'coc-go',
-"            \]
-" try to set root patterns for pyright
-"autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv', '.venv', 'setup.cfg', 'setup.py', 'pyproject.toml', 'pyrightconfig.json']
-"
-"let g:rg_derive_root='true'
-
 lua << EOF
 require("nvim-lsp-installer").setup({
     automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
@@ -211,12 +169,77 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
 end
-local servers = { 'pyright', 'tsserver', 'solargraph', 'sorbet', 'elixirls' }
+local servers = { 'pyright', 'tsserver', 'solargraph', 'sorbet', 'elixirls', 'gopls'}
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
   }
 end
+
+require('nvim-tree').setup{}
+require'nvim-web-devicons'.setup {
+ -- your personnal icons can go here (to override)
+ -- you can specify color or cterm_color instead of specifying both of them
+ -- DevIcon will be appended to `name`
+ override = {
+  zsh = {
+    icon = "",
+    color = "#428850",
+    cterm_color = "65",
+    name = "Zsh"
+  }
+ };
+ -- globally enable default icons (default to false)
+ -- will get overriden by `get_icons` option
+ default = true;
+}
+
+require('lspconfig').gopls.setup{
+	cmd = {'gopls'},
+	-- for postfix snippets and analyzers
+	capabilities = capabilities,
+	    settings = {
+	      gopls = {
+		      experimentalPostfixCompletions = true,
+		      analyses = {
+		        unusedparams = true,
+		        shadow = true,
+		     },
+		     staticcheck = true,
+		    },
+	    },
+	on_attach = on_attach,
+}
+
+  function goimports(timeoutms)
+    local context = { source = { organizeImports = true } }
+    vim.validate { context = { context, "t", true } }
+
+    local params = vim.lsp.util.make_range_params()
+    params.context = context
+
+    -- See the implementation of the textDocument/codeAction callback
+    -- (lua/vim/lsp/handler.lua) for how to do this properly.
+    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeout_ms)
+    if not result or next(result) == nil then return end
+    local actions = result[1].result
+    if not actions then return end
+    local action = actions[1]
+
+    -- textDocument/codeAction can return either Command[] or CodeAction[]. If it
+    -- is a CodeAction, it can have either an edit, a command or both. Edits
+    -- should be executed first.
+    if action.edit or type(action.command) == "table" then
+      if action.edit then
+        vim.lsp.util.apply_workspace_edit(action.edit)
+      end
+      if type(action.command) == "table" then
+        vim.lsp.buf.execute_command(action.command)
+      end
+    else
+      vim.lsp.buf.execute_command(action)
+    end
+  end
 EOF
 
 "" fzf 
@@ -401,7 +424,12 @@ if has('nvim')
 endif
 
 " NERDTree to C-e
-map <C-e> :NERDTreeToggle<CR>
+"map <C-e> :NERDTreeToggle<CR>
+map <C-e> :NvimTreeToggle<CR>
+
+autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
+autocmd BufWritePre *.go lua goimports(1000)
+
 
 " ##############################################################################
 " Easier split navigation
