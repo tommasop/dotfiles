@@ -9,9 +9,9 @@ windows:
       panes:
         - nvim Gemfile
         - #empty
-  - server: bundle exec rails s
-  - logs: tail -f log/development.log
-  - console: bundle exec rails c
+  - server: ./compose-development.sh up
+  - logs: 
+  - console: docker-compose exec web bundle exec rails c
 on_project_start:
   - export RBENV_DIR=
   - export RBENV_VERSION=

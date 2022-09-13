@@ -19,20 +19,18 @@ echo "Updating brew formulas"
   	brew update
 
 PACKAGES=(
-    ack
-    ffmpeg
-    graphviz
-    imagemagick
-    jq
-    libjpeg
-    python
-    python3
-    tmux
-    nvim
+    # ack
+    # ffmpeg
+    # graphviz
+    # imagemagick
+    # jq
+    # libjpeg
+    # tmux
+    # nvim
     youtube-dl
-    ag
-    cmake
-    redis
+    # ag
+    # cmake
+    # redis
     pgcli
     ripgrep
     cloc

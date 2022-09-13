@@ -25,3 +25,4 @@ install zsh
 install pass
 install neovim
 install tmux
+install cmus
