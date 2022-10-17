@@ -59,23 +59,18 @@ M.general = {
 
     -- new buffer
     ["<leader>b"] = { "<cmd> enew <CR>", "new buffer" },
-
-    -- close buffer + hide terminal buffer
-    ["<leader>x"] = {
-      function()
-        require("core.utils").close_buffer()
-      end,
-      "close buffer",
-    },
   },
 
   t = { ["<C-x>"] = { termcodes "<C-\\><C-N>", "escape terminal mode" } },
 
   v = {
-    ["j"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', opts = { expr = true } },
-    ["k"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', opts = { expr = true } },
     ["<Up>"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', opts = { expr = true } },
     ["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', opts = { expr = true } },
+  },
+
+  x = {
+    ["j"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', opts = { expr = true } },
+    ["k"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', opts = { expr = true } },
     -- Don't copy the replaced text after pasting in visual mode
     -- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
     ["p"] = { 'p:let @+=@0<CR>:let @"=@0<CR>', opts = { silent = true } },
@@ -89,20 +84,28 @@ M.tabufline = {
     -- cycle through buffers
     ["<TAB>"] = {
       function()
-        require("core.utils").tabuflineNext()
+        require("nvchad_ui.tabufline").tabuflineNext()
       end,
       "goto next buffer",
     },
 
     ["<S-Tab>"] = {
       function()
-        require("core.utils").tabuflinePrev()
+        require("nvchad_ui.tabufline").tabuflinePrev()
       end,
       "goto prev buffer",
     },
 
     -- pick buffers via numbers
     ["<Bslash>"] = { "<cmd> TbufPick <CR>", "Pick buffer" },
+
+    -- close buffer + hide terminal buffer
+    ["<leader>x"] = {
+      function()
+        require("nvchad_ui.tabufline").close_buffer()
+      end,
+      "close buffer",
+    },
   },
 }
 
@@ -226,7 +229,7 @@ M.lspconfig = {
 
     ["<leader>fm"] = {
       function()
-        vim.lsp.buf.formatting {}
+        vim.lsp.buf.format { async = true }
       end,
       "lsp formatting",
     },
@@ -397,6 +400,70 @@ M.blankline = {
       end,
 
       "Jump to current_context",
+    },
+  },
+}
+
+M.gitsigns = {
+  plugin = true,
+
+  n = {
+    -- Navigation through hunks
+    ["]c"] = {
+      function()
+        if vim.wo.diff then
+          return "]c"
+        end
+        vim.schedule(function()
+          require("gitsigns").next_hunk()
+        end)
+        return "<Ignore>"
+      end,
+      "Jump to next hunk",
+      opts = { expr = true },
+    },
+
+    ["[c"] = {
+      function()
+        if vim.wo.diff then
+          return "[c"
+        end
+        vim.schedule(function()
+          require("gitsigns").prev_hunk()
+        end)
+        return "<Ignore>"
+      end,
+      "Jump to prev hunk",
+      opts = { expr = true },
+    },
+
+    -- Actions
+    ["<leader>rh"] = {
+      function()
+        require("gitsigns").reset_hunk()
+      end,
+      "Reset hunk",
+    },
+
+    ["<leader>ph"] = {
+      function()
+        require("gitsigns").preview_hunk()
+      end,
+      "Preview hunk",
+    },
+
+    ["<leader>gb"] = {
+      function()
+        package.loaded.gitsigns.blame_line()
+      end,
+      "Blame line",
+    },
+
+    ["<leader>td"] = {
+      function()
+        require("gitsigns").toggle_deleted()
+      end,
+      "Toggle deleted",
     },
   },
 }

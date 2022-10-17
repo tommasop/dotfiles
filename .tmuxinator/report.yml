@@ -8,7 +8,7 @@ windows:
       panes:
         - nvim docker-compose.development.yml
         - #empty
-  - server: LOCAL_USER_ID=1000 DOCKER_HOST_IP=`ip route | grep docker0 | awk '{print $9}'` ./compose-run.sh
+  - server: ./dev.sh up
   - container: docker exec -it logishift-report_api_1 /bin/bash 
 on_project_start:
   - export RBENV_DIR=
