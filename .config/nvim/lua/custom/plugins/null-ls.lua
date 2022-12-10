@@ -23,7 +23,12 @@ local sources = {
    b.formatting.standardrb,
 
    -- Go
-   b.formatting.gofmt
+   b.formatting.gofmt,
+
+   -- Elixir
+   b.formatting.mix,
+   b.formatting.surface,
+   -- b.diagnostics.credo
 }
 
 null_ls.setup {

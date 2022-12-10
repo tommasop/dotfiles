@@ -28,6 +28,7 @@ export NPM_PASSWORD=B1nAr12020
 export USER_ID=$(id -u)
 export GROUP_ID=$(id -g)
 export DOCKER_HOST_IP=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
+export MY_IP=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
 
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export RUBY_CONFIGURE_OPTS="--disable-install-doc"

@@ -25,6 +25,9 @@ M.mason = {
       -- go
       "gopls",
 
+      --elixir
+      "elixir-ls",
+
       -- shell
       "shfmt",
       "shellcheck",

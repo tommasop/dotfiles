@@ -13,4 +13,9 @@ return {
     end,
   },
   ["tpope/vim-abolish"] = {},
+  ["elixir-editors/vim-elixir"] = {},
+  ["iamcco/markdown-preview.nvim"] = {
+    run = function() vim.fn["mkdp#util#install"]() end
+  },
+  ["kdheepak/lazygit.nvim"] = {},
 }

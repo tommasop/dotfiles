@@ -45,3 +45,5 @@
 	repo = /home/tommasop/Git/zsh-autosuggestions
 	repo = /home/tommasop/Git/zsh-snap
 	repo = /home/tommasop/Git/zsh-syntax-highlighting
+[pull]
+	rebase = false
