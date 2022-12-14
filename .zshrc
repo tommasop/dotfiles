@@ -19,12 +19,6 @@ export PATH="$PATH:/snap/bin"
 export PATH="$PATH:/home/linuxbrew/.linuxbrew/Cellar/texlive/20190406/"
 
 # docker env variables
-export BITBUCKET_USERNAME=binarysystem_deploy
-export BITBUCKET_PASSWORD=ceSyzZaRNT6baAKNqLzr
-export GEMS_USERNAME=developer
-export GEMS_PASSWORD=B1nAr12020
-export NPM_USERNAME=developer
-export NPM_PASSWORD=B1nAr12020
 export USER_ID=$(id -u)
 export GROUP_ID=$(id -g)
 export DOCKER_HOST_IP=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
