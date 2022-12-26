@@ -2,7 +2,7 @@ local on_attach = require("plugins.configs.lspconfig").on_attach
 local capabilities = require("plugins.configs.lspconfig").capabilities
 
 local lspconfig = require "lspconfig"
-local servers = { 'html', 'cssls', 'pyright', 'tsserver', 'solargraph', 'sorbet', 'gopls'}
+local servers = {'html', 'cssls', 'pyright', 'tsserver', 'solargraph', 'sorbet', 'gopls'}
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -20,11 +20,11 @@ lspconfig['elixirls'].setup {
       -- I choose to disable dialyzer for personal reasons, but
       -- I would suggest you also disable it unless you are well
       -- aquainted with dialzyer and know how to use it.
-      dialyzerEnabled = false,
+      dialyzerEnabled = true,
       -- I also choose to turn off the auto dep fetching feature.
       -- It often get's into a weird state that requires deleting
       -- the .elixir_ls directory and restarting your editor.
-      fetchDeps = false
+      fetchDeps = true
     }
   }
 }
