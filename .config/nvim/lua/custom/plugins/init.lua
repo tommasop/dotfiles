@@ -14,6 +14,9 @@ return {
   },
   ["tpope/vim-abolish"] = {},
   ["elixir-editors/vim-elixir"] = {},
+  ["mhanberg/elixir.nvim"] = {
+    requires = { "nvim-lua/plenary.nvim" }
+  },
   ["iamcco/markdown-preview.nvim"] = {
     run = function() vim.fn["mkdp#util#install"]() end
   },
