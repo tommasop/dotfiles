@@ -21,4 +21,7 @@ return {
     run = function() vim.fn["mkdp#util#install"]() end
   },
   ["kdheepak/lazygit.nvim"] = {},
+  ["rcarriga/nvim-notify"] = {
+    after = "null-ls",
+  },
 }
