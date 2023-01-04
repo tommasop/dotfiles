@@ -6,6 +6,40 @@ return {
       require "custom.plugins.null-ls"
     end,
   },
+  ["williamboman/mason.nvim"] = {
+    override_options = {
+      ensure_installed = {
+          -- lua stuff
+          "lua-language-server",
+          "stylua",
+
+          -- web dev
+          "css-lsp",
+          "html-lsp",
+          "typescript-language-server",
+          "deno",
+          "emmet-ls",
+          "json-lsp",
+
+          -- ruby 
+          "sorbet",
+          "solargraph",
+
+          -- python
+          "pyright",
+
+          -- go
+          "gopls",
+
+          --elixir
+          "elixir-ls",
+
+          -- shell
+          "shfmt",
+          "shellcheck",
+      },
+    }
+  },
   ["neovim/nvim-lspconfig"] = {
     config = function()
       require "plugins.configs.lspconfig"
@@ -21,7 +55,6 @@ return {
     run = function() vim.fn["mkdp#util#install"]() end
   },
   ["kdheepak/lazygit.nvim"] = {},
-  ["rcarriga/nvim-notify"] = {
-    after = "null-ls",
-  },
+  ["rcarriga/nvim-notify"] = {},
+  ["vim-test/vim-test"] = {},
 }
