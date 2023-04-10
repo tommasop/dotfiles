@@ -53,12 +53,14 @@ local plugins = {
       require("plenary.nvim").setup()
     end
   },
-  {"iamcco/markdown-preview.nvim",
-    run = function() vim.fn["mkdp#util#install"]() end
+  {"kdheepak/lazygit.nvim",
+    lazy = false
   },
-  {"kdheepak/lazygit.nvim"},
   {"rcarriga/nvim-notify"},
   {"vim-test/vim-test"},
+  {"iamcco/markdown-preview.nvim",
+    build = function() vim.fn["mkdp#util#install"]() end
+  },
   -- To make a p}not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",
