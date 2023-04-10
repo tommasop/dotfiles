@@ -17,12 +17,14 @@ export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$PATH:/snap/bin"
 export PATH="$PATH:/home/linuxbrew/.linuxbrew/Cellar/texlive/20190406/"
+export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/bin:$PATH"
 
 # docker env variables
 export USER_ID=$(id -u)
 export GROUP_ID=$(id -g)
 export DOCKER_HOST_IP=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
 export MY_IP=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
+export CR_PAT=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
 
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export RUBY_CONFIGURE_OPTS="--disable-install-doc"

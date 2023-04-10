@@ -15,8 +15,8 @@ fi
 alias ts="tmuxinator start"
 
 # To be run as sudo su
-alias free_mem="sync && echo 3 > /proc/sys/vm/drop_caches"
-alias free_swap="swapoff -a && swapon -a"
+alias free_mem="sudo sync && sudo echo 3 > /proc/sys/vm/drop_caches"
+alias free_swap="sudo swapoff -a && sudo swapon -a"
 
 # Youtube Dl music extraction
 mp3 () {
@@ -28,6 +28,17 @@ mp3p () {
 }
 video-list () {
 	youtube-dl --geo-bypass --no-check-certificate --yes-playlist --socket-timeout 60 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
+}
+
+mp3_ () {
+	yt-dlp --no-check-certificate --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(title)s.%(ext)s' "$1"
+}
+# Playlist
+mp3p_ () {
+	yt-dlp --geo-bypass --no-check-certificate --yes-playlist --socket-timeout 60 --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
+}
+video-list_ () {
+	yt-dlp --geo-bypass --no-check-certificate --yes-playlist --socket-timeout 60 -o '~/Music/youtube/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
 }
 
 alias stale_branches='git branches --sort=committerdate --merged | grep '\''Tommaso Patrizi'\'' | awk '\''{print $6}'\'' | sed '\''s/origin\///g'\'' | xargs echo' 
