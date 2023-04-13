@@ -38,7 +38,6 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 [[ -f ~/Git/zsh-snap/znap.zsh ]] ||
     git clone --depth 1 -- \
         https://github.com/marlonrichert/zsh-snap.git ~/Git/zsh-snap
-
 source ~/Git/zsh-snap/znap.zsh  # Start Znap
 
 # Load all stock functions (from $fpath files) called below.
@@ -47,15 +46,15 @@ source ~/Git/zsh-snap/znap.zsh  # Start Znap
 # `znap prompt` makes your prompt appear in ~40ms. You can start typing right away!
 znap prompt spaceship-prompt/spaceship-prompt
 
+znap source marlonrichert/zsh-autocomplete
+znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-syntax-highlighting
 # Use `znap source` to load only those parts of Oh-My-Zsh or Prezto that you really need:
 znap source ohmyzsh/ohmyzsh plugins/git
 znap source ohmyzsh/ohmyzsh plugins/asdf
 # znap source ohmyzsh/ohmyzsh plugins/rails
 znap source sorin-ionescu/prezto modules/{environment,history}
 znap source Aloxaf/fzf-tab
-znap source marlonrichert/zsh-autocomplete
-znap source zsh-users/zsh-autosuggestions
-znap source zsh-users/zsh-syntax-highlighting
 
 source $HOME/.asdf/asdf.sh
 

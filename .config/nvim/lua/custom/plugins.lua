@@ -1,4 +1,4 @@
-local overrides = require("custom.configs.overrides")
+local overrides = require "custom.configs.overrides"
 
 ---@type NvPluginSpec[]
 local plugins = {
@@ -25,7 +25,7 @@ local plugins = {
   -- override plugin configs
   {
     "williamboman/mason.nvim",
-    opts = overrides.mason
+    opts = overrides.mason,
   },
 
   {
@@ -46,27 +46,47 @@ local plugins = {
       require("better_escape").setup()
     end,
   },
-  { "tpope/vim-abolish"},
-  {"elixir-editors/vim-elixir"},
-  {"mhanberg/elixir.nvim",
+  { "tpope/vim-abolish" },
+  { "elixir-editors/vim-elixir" },
+  {
+    "mhanberg/elixir.nvim",
+    ft = { "elixir", "eex", "heex", "surface" },
     config = function()
-      require("plenary.nvim").setup()
-    end
+      local elixir = require "elixir"
+
+      elixir.setup {
+        settings = elixir.settings {
+          dialyzerEnabled = false,
+          enableTestLenses = false,
+        },
+        log_level = vim.lsp.protocol.MessageType.Log,
+        message_level = vim.lsp.protocol.MessageType.Log,
+        on_attach = function(client, bufnr)
+          -- whatever keybinds you want, see below for more suggestions
+          vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
+          vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
+          vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", { buffer = true, noremap = true })
+        end,
+      }
+    end,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
   },
-  {"kdheepak/lazygit.nvim",
-    lazy = false
-  },
-  {"rcarriga/nvim-notify"},
-  {"vim-test/vim-test"},
-  {"iamcco/markdown-preview.nvim",
-    build = function() vim.fn["mkdp#util#install"]() end
+  { "kdheepak/lazygit.nvim", lazy = false },
+  { "rcarriga/nvim-notify" },
+  { "vim-test/vim-test", lazy = false },
+  {
+    "iamcco/markdown-preview.nvim",
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
   },
   -- To make a p}not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",
   --   enabled = false
   -- },
-
 }
 
 return plugins
