@@ -49,24 +49,27 @@ local plugins = {
   { "tpope/vim-abolish" },
   { "elixir-editors/vim-elixir" },
   {
-    "mhanberg/elixir.nvim",
-    ft = { "elixir", "eex", "heex", "surface" },
+    "elixir-tools/elixir-tools.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
-      local elixir = require "elixir"
+      local elixir = require("elixir")
+      local elixirls = require("elixir.elixirls")
 
       elixir.setup {
-        settings = elixir.settings {
-          dialyzerEnabled = false,
-          enableTestLenses = false,
-        },
-        log_level = vim.lsp.protocol.MessageType.Log,
-        message_level = vim.lsp.protocol.MessageType.Log,
-        on_attach = function(client, bufnr)
-          -- whatever keybinds you want, see below for more suggestions
-          vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
-          vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
-          vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", { buffer = true, noremap = true })
-        end,
+        credo = {},
+        elixirls = {
+          enabled = true,
+          settings = elixirls.settings {
+            dialyzerEnabled = false,
+            enableTestLenses = false,
+          },
+          on_attach = function(client, bufnr)
+            -- whatever keybinds you want, see below for more suggestions
+            vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
+            vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
+            vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", { buffer = true, noremap = true })
+          end,
+        }
       }
     end,
     dependencies = {
@@ -76,11 +79,22 @@ local plugins = {
   { "kdheepak/lazygit.nvim", lazy = false },
   { "rcarriga/nvim-notify" },
   { "vim-test/vim-test", lazy = false },
+  { "ryanoasis/vim-devicons", lazy = false },
   {
     "iamcco/markdown-preview.nvim",
     build = function()
       vim.fn["mkdp#util#install"]()
     end,
+  },
+  {
+    "junegunn/fzf",
+    build = function()
+      vim.fn["fzf#install"]()
+    end,
+    lazy = false
+  },
+  {
+    "junegunn/fzf.vim", lazy = false
   },
   -- To make a p}not be loaded
   -- {
