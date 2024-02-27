@@ -18,6 +18,7 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="$PATH:/snap/bin"
 export PATH="$PATH:/home/linuxbrew/.linuxbrew/Cellar/texlive/20190406/"
 export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@1.1/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # docker env variables
 export USER_ID=$(id -u)
@@ -28,6 +29,8 @@ export CR_PAT=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
 
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export RUBY_CONFIGURE_OPTS="--disable-install-doc"
+
+export JIRA_API_TOKEN=ATATT3xFfGF0WeWWkTMUjlpZvS5c-uvrNQaGdAj2YfJ1dS7XUub_DfFweEwgiQFfpJbl44o3FZb9_ap4gpkVOX9nO-2vkVD1KA-K0ga6Sg6T35OnW7iinOV6SAuukWklCtZJKL0Y4q4R7E1SMFdMSh1Zxb4gw7dyzN2B7cXb2gk_qvyhjKTOs-U=045CD1A6
 
 
 # export TERM=xterm

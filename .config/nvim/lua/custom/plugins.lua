@@ -46,7 +46,7 @@ local plugins = {
       require("better_escape").setup()
     end,
   },
-  { "tpope/vim-abolish" },
+  { "tpope/vim-abolish", lazy = false },
   { "elixir-editors/vim-elixir" },
   {
     "elixir-tools/elixir-tools.nvim",

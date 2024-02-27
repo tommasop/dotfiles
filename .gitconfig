@@ -52,5 +52,15 @@
 	repo = /home/tommasop/Git/zsh-users/zsh-autosuggestions
 	repo = /home/tommasop/Git/zsh-users/zsh-syntax-highlighting
 	repo = /home/tommasop/Git/marlonrichert/zsh-autocomplete
+	repo = /home/tommasop/Repos/znap
+	repo = /home/tommasop/Repos/Aloxaf/fzf-tab
+	repo = /home/tommasop/Repos/ellie/atuin
+	repo = /home/tommasop/Repos/marlonrichert/zsh-autocomplete
+	repo = /home/tommasop/Repos/marlonrichert/zsh-hist
+	repo = /home/tommasop/Repos/ohmyzsh/ohmyzsh
+	repo = /home/tommasop/Repos/sorin-ionescu/prezto
+	repo = /home/tommasop/Repos/spaceship-prompt/spaceship-prompt
+	repo = /home/tommasop/Repos/zsh-users/zsh-autosuggestions
+	repo = /home/tommasop/Repos/zsh-users/zsh-syntax-highlighting
 [pull]
 	rebase = false

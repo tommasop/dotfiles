@@ -9,6 +9,7 @@ M.general = {
     ["<leader>t"] = { "<cmd> TestNearest <CR>", "test nearest"},
     ["<leader>T"] = { "<cmd> TestFile <CR>", "test file"},
     ["<leader>A"] = { "<cmd> TestSuite <CR>", "test suite"},
+    ["<leader>g"] = { "<cmd> LazyGit <CR>", "lazy git"},
   },
 }
 
