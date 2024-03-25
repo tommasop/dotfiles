@@ -140,4 +140,9 @@ return {
     "junegunn/fzf.vim",
     lazy = false,
   },
+  {
+    "willothy/wezterm.nvim",
+    config = true,
+    lazy = false,
+  },
 }
