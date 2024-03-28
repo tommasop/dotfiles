@@ -4,6 +4,8 @@ require "nvchad.mappings"
 
 local map = vim.keymap.set
 
+map("i", "<Esc>", "<C-\\><C-n>", { desc = "Escape vim mode from insert" })
+map("t", "jk", "<C-\\><C-n>", { desc = "Escape vim mode in terminal" })
 map("n", "|", "<cmd>Telescope live_grep<CR>", { desc = "Telescope Live grep" })
 map("n", ";", "<cmd>Telescope buffers<CR>", { desc = "Telescope Find buffers" })
 map("n", "<Space><Space>", "<C-^>", { desc = "Previous buffer" })
