@@ -1,7 +1,7 @@
 return {
   {
     "stevearc/conform.nvim",
-    -- event = 'BufWritePre' -- uncomment for format on save
+    event = "BufWritePre", -- uncomment for format on save
     config = function()
       require "configs.conform"
     end,
@@ -103,8 +103,8 @@ return {
         elixirls = {
           enabled = true,
           settings = elixirls.settings {
-            dialyzerEnabled = false,
-            enableTestLenses = false,
+            dialyzerEnabled = true,
+            enableTestLenses = true,
           },
           on_attach = function(client, bufnr)
             -- whatever keybinds you want, see below for more suggestions
